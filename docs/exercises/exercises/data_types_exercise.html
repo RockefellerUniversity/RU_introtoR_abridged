@@ -377,40 +377,37 @@ previous vector.</li>
 <pre><code>## [1]  5 10 15</code></pre>
 <p><strong>Exercise 2</strong></p>
 <ul>
-<li><p>Read in the file <em>categoriesAndExpression.txt</em> from the
-<em>data</em> directory of the course material.</p></li>
-<li><p>Subset the data frame to only the first 5 genes and remove the
-second column.</p></li>
+<li><p>Create data frame called Annotation with a column of gene names
+(“Gene_1”, “Gene_2”, “Gene_3”,“Gene_4”,“Gene_5”), ensembl gene names
+(“Ens001”, “Ens003”, “Ens006”, “Ens007”, “Ens010”), pathway information
+(“Glycolysis”, “TGFb”, “Glycolysis”, “TGFb”, “Glycolysis”) and gene
+lengths (100, 3000, 200, 1000,1200).</p></li>
+<li><p>Add a column with the expression data: (1000, 3000, 10000,5000,
+50)</p></li>
+<li><p>Subset the data frame to only the first 2 genes and remove the
+ensembl IDs.</p></li>
 </ul>
-<pre><code>##   geneName    pathway Expression
-## 1    Gene1 Glycolysis   20.09519
-## 2    Gene2 Glycolysis   23.00306
-## 3    Gene3 Glycolysis   20.99712
-## 4    Gene4 Glycolysis   43.01145
-## 5    Gene5 Glycolysis   22.00567</code></pre>
+<pre><code>##   geneNames    pathway geneLengths expression
+## 1    Gene_1 Glycolysis         100       1000
+## 2    Gene_2       TGFb        3000       3000</code></pre>
 <ul>
-<li>Subset the data frame to the last 5 genes and remove the second and
-third column.</li>
+<li>Subset the data frame to the last 2 genes and remove the fourth and
+fifth column. Try do this so the code would work, whatever size the data
+frame is.</li>
 </ul>
-<pre><code>##     geneName Expression
-## 96    Gene96   45.04984
-## 97    Gene97   50.08556
-## 98    Gene98   49.94331
-## 99    Gene99   57.90284
-## 100  Gene100   62.93485</code></pre>
+<pre><code>##   geneNames ensembl    pathway
+## 4    Gene_4  Ens007       TGFb
+## 5    Gene_5  Ens010 Glycolysis</code></pre>
 <ul>
-<li>Calculate the log2 of the expression level for the subset data frame
-and add it as a new column.</li>
+<li>Calculate the length normalized expression and add it to a new
+column</li>
 </ul>
-<pre><code>##     geneName Expression log2_expression
-## 96    Gene96   45.04984        5.493450
-## 97    Gene97   50.08556        5.646323
-## 98    Gene98   49.94331        5.642219
-## 99    Gene99   57.90284        5.855562
-## 100  Gene100   62.93485        5.975787</code></pre>
-<ul>
-<li>Export your data as a excel spreadsheet</li>
-</ul>
+<pre><code>##   geneNames ensembl    pathway geneLengths expression len_norm_exp
+## 1    Gene_1  Ens001 Glycolysis         100       1000  10.00000000
+## 2    Gene_2  Ens003       TGFb        3000       3000   1.00000000
+## 3    Gene_3  Ens006 Glycolysis         200      10000  50.00000000
+## 4    Gene_4  Ens007       TGFb        1000       5000   5.00000000
+## 5    Gene_5  Ens010 Glycolysis        1200         50   0.04166667</code></pre>
 
 
 
