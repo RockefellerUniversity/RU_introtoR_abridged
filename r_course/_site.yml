@@ -68,7 +68,7 @@ navbar:
         href: exercises/answers/Functions_answers.html
   right:
   - text: Getting help!
-    href: https://github.com//RockefellerUniversity/Intro_To_R_1Day/issues
+    href: https://github.com//RockefellerUniversity/RU_introtoR_abridged/issues
   - href: https://twitter.com/Rockefeller_BRC
     icon: ion-social-twitter
 output:

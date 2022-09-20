@@ -1,0 +1,16 @@
+"Gene"	"Length"
+"Gene1"	1788
+"Gene3"	213
+"Gene5"	529
+"Gene7"	234
+"Gene8"	1638
+"Gene9"	917
+"Gene10"	1882
+"Gene12"	501
+"Gene13"	1045
+"Gene15"	1869
+"Gene16"	851
+"Gene17"	1807
+"Gene18"	600
+"Gene19"	1889
+"Gene20"	992
