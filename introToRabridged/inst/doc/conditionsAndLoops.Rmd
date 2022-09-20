@@ -24,7 +24,7 @@ These exercises are about the conditions and loops sections of [Introduction to 
 
 - Read in the file *categoriesAndExpression.txt* from the *data* directory of the course material. Filter it the *ofInterest* column to just the **Selected**.
 
-```{r}
+```{r,echo=toMessage}
 my_df <- read.table("data/categoriesAndExpression.txt",sep="\t",header=T)
 head(my_df)
 my_df_subset <- my_df[my_df$ofInterest == "Selected",]
@@ -33,7 +33,7 @@ my_df_subset
 
 - Reorder the subset from smallest to largest in expression levels. 
 
-```{r}
+```{r,echo=toMessage}
 my_df_subset_ordered <- my_df_subset[order(my_df_subset$Expression),]
 ```
 
@@ -69,7 +69,7 @@ temp
 
 NOTE: the *dir()* function can return only specific file types with the *pattern* argument. 
 
-```{r,echo=toMessage}
+```{r,echo=toMessage , warning=F}
 
 filesToRead <- dir("ExpressionResults/", pattern = "*\\.txt", full.names=T)
 

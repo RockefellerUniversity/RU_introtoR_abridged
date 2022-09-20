@@ -60,7 +60,7 @@ my_df_subset
 
 - Subset the data frame to the last 5 genes and remove the second and third column. 
 
-```{r}
+```{r,echo=toMessage}
 my_df_subset <- my_df[(nrow(my_df)-4):nrow(my_df),-c(2,3)]
 my_df_subset
 ```
@@ -73,7 +73,7 @@ my_df_subset
 ```
 
 - Export your data as a excel spreadsheet
-```{r}
+```{r,echo=toMessage}
 library(rio)
 export(my_df_subset,"data/subset_genes.xlsx")
 
