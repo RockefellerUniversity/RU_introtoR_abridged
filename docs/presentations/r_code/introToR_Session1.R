@@ -62,7 +62,7 @@ if(params$isSlides == "yes"){
 
 
 
-## -----------------------------------------------------------------------------
+## ---- echo=F------------------------------------------------------------------
 #potential other r plots
 #https://stackoverflow.blog/2017/10/31/disliked-programming-languages/
 #https://stackoverflow.blog/2017/10/31/disliked-programming-languages/
@@ -593,8 +593,8 @@ Table <- import("data/readThisXLS.xls",
 Table[1:2,]
 
 
-## ----echo=T,eval=TRUE---------------------------------------------------------
-ExpressionScores <- Table$ExpressionScores
-export(ExpressionScores, file = "data/writeThisXLSX.xlsx")
-
+## ----echo=T,eval=F------------------------------------------------------------
+## ExpressionScores <- Table$ExpressionScores
+## export(ExpressionScores, file = "data/writeThisXLSX.xlsx")
+## 
 
