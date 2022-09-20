@@ -1107,7 +1107,7 @@ When indexing data frames, two values may be provided within the square brackets
 
 The first value(s) corresponds to row(s) and the second to column(s).
 
-- ***myMatrix[rowOfInterest,columnOfInterest]***
+- ***myDataFrame[rowOfInterest,columnOfInterest]***
 
 ---
 ## Indexing
