@@ -46,36 +46,35 @@ y
 
 **Exercise 2** 
 
-- Read in the file *categoriesAndExpression.txt* from the *data* directory of the course material.
+- Create data frame called Annotation with a column of gene names ("Gene_1", "Gene_2", "Gene_3","Gene_4","Gene_5"),  ensembl gene names ("Ens001", "Ens003", "Ens006", "Ens007", "Ens010"),  pathway information ("Glycolysis", "TGFb", "Glycolysis", "TGFb", "Glycolysis") and  gene lengths (100, 3000, 200, 1000,1200).
 ```{r,echo=toMessage}
-my_df <- read.table("data/categoriesAndExpression.txt",sep="\t",header=T)
+Annotation <- data.frame(geneNames=c("Gene_1", "Gene_2", "Gene_3","Gene_4","Gene_5"), ensembl=c("Ens001", "Ens003", "Ens006", "Ens007", "Ens010"),pathway=c("Glycolysis", "TGFb", "Glycolysis", "TGFb", "Glycolysis"),geneLengths=c(100, 3000, 200, 1000,1200))
 ```
 
-- Subset the data frame to only the first 5 genes and remove the second column. 
-
+- Add a column with the expression data: (1000, 3000, 10000,5000, 50) 
 ```{r,echo=toMessage}
-my_df_subset <- my_df[1:5,-2]
-my_df_subset
+Annotation$expression <- c(1000, 3000, 10000,5000,50) 
 ```
 
-- Subset the data frame to the last 5 genes and remove the second and third column. 
+- Subset the data frame to only the first 2 genes and remove the ensembl IDs. 
 
 ```{r,echo=toMessage}
-my_df_subset <- my_df[(nrow(my_df)-4):nrow(my_df),-c(2,3)]
-my_df_subset
+Annotation_subset <- Annotation[1:2,-2]
+Annotation_subset
 ```
 
-- Calculate the log2 of the expression level for the subset data frame and add it as a new column.
+- Subset the data frame to the last 2 genes and remove the fourth and fifth column. Try do this so the code would work, whatever size the data frame is. 
 
 ```{r,echo=toMessage}
-my_df_subset$log2_expression <- log2(my_df_subset$Expression)
-my_df_subset
+Annotation_subset2 <- Annotation[(nrow(Annotation)-1):nrow(Annotation),-c(4,5)]
+Annotation_subset2
 ```
 
-- Export your data as a excel spreadsheet
+- Calculate the length normalized expression and add it to a new column
+
 ```{r,echo=toMessage}
-library(rio)
-export(my_df_subset,"data/subset_genes.xlsx")
-
+Annotation$len_norm_exp <- Annotation$expression / Annotation$geneLengths
+Annotation
 ```
+
 
