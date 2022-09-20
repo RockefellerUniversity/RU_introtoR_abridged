@@ -1,7 +1,7 @@
 ---
-title: "Introduction to R - Abridged, Session 1 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>"
+title: "Introduction to R - Abridged, Session 1<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>"
 author: "Rockefeller University, Bioinformatics Resource Centre"
-date: "http://rockefelleruniversity.github.io/Intro_To_R_1Day/"
+date: "http://rockefelleruniversity.github.io/RU_introtoR_abridged/"
 output: 
   xaringan::moon_reader:
     css: ["default", "metropolisCustom.css", "metropolis-fontsCustom.css"]
@@ -1783,7 +1783,7 @@ Table[1:2,]
 
 We can export our data back to file using the **export()** function and specifying the name of the output file to the **file** argument. The **export()** function will guess the format required from the extension.
 
-```{r,echo=T,eval=TRUE}
+```{r,echo=T,eval=F}
 ExpressionScores <- Table$ExpressionScores
 export(ExpressionScores, file = "data/writeThisXLSX.xlsx")
 
