@@ -74,13 +74,15 @@ Data analysis typically starts when you want to start performing operations on w
 * Selecting
 * Merging
 
-# Lets get some input data
+---
+## Lets get some input data
 
 ```{r}
 my_df <- read.table("data/categoriesAndExpression.txt",sep="\t",header=T)
 head(my_df)
 ```
 
+---
 ## Ordering
 
 The order function can be used to reorder objects in R. The result of this function is the numerical order of the input, from smallest to largest.
@@ -90,6 +92,7 @@ order(my_df[,4])
 
 ```
 
+---
 ## Ordering
 
 We can use the result of order to index our data frame. This will reorder the dataframe based on the order. In this case we are reordeing based on lowest expression.
@@ -100,6 +103,7 @@ my_df_ordered <- my_df[order(my_df[,4]),]
 head(my_df_ordered)
 ```
 
+---
 ## Ordering
 
 Often we want to order based on the highest value i.e. we want the highest expression genes at the top of our data frame. We can use the decreasing argument to control this.  of the time we actually 
@@ -110,6 +114,7 @@ my_df_ordered <- my_df[order(my_df[,4], decreasing = T),]
 head(my_df_ordered)
 ```
 
+---
 ## Subsetting
 
 Anotehr opertaion we oftenwant to do is subset our dataset based on a specific condition i.e. I want to only look at Glycolysis genes, or I only want to gene above a certain expression threshold. To do this we need to use a logical operator test to see if this if something is TRUE.
@@ -143,7 +148,6 @@ my_df_ordered[idx,]
 ```
 
 ---
-
 ## Combining logical vectors
 
 Logical vectors can be used in combination in order to index vectors. To combine logical vectors we can use some common R operators.
@@ -186,6 +190,7 @@ df_out <- data.frame("Gene"=my_df[,1], "Length"=sample(200:2000,100))
 write.table(df_out,  "data/gene_lengths.txt",sep="\t",col.names=T, row.names=F)
 ```
 
+---
 ## Merging
 
 A common operation is to join two data frames by a column of common values.
@@ -535,6 +540,7 @@ plot(merge_df[,c(4,5)])
 
 ```
 
+---
 ## Base plotting
 
 Many plots types like factors. This helps the plotting deal with dividing your data into categories.
@@ -554,6 +560,7 @@ merge_df[,3] <- factor(merge_df[,3])
 plot(merge_df[,3])
 ```
 
+---
 ## Base plotting
 
 There are also some functions for making specific plots, like boxplot.
@@ -563,6 +570,7 @@ boxplot(Expression ~ pathway, merge_df)
 
 ```
 
+---
 ## Beyond Base plots
 For more advance plots we recommend you check out our ggplot2 training. [R graph gallery](https://r-graph-gallery.com/index.html) is also a really useful website that has example plots and the code used to generate them. 
 
