@@ -1246,8 +1246,8 @@ newDF
 **rbind()** functions to bind to a data frame as rows.
 ```{r matricesRbind_introtoR}
 z <- c(5,"patient5","male",25)
-newerMatrix <- rbind(newMatrix,z)
-newerMatrix
+newerDF <- rbind(newDF,z)
+newerDF
 ```
 
 
