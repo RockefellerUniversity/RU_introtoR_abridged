@@ -59,7 +59,8 @@ Data analysis typically starts when you want to start performing operations on w
 * Selecting
 * Merging
 
-# Lets get some input data
+---
+## Lets get some input data
 
 
 ```r
@@ -77,6 +78,7 @@ head(my_df)
 ## 6    Gene6   Selected Glycolysis   20.99162
 ```
 
+---
 ## Ordering
 
 The order function can be used to reorder objects in R. The result of this function is the numerical order of the input, from smallest to largest.
@@ -95,6 +97,7 @@ order(my_df[,4])
 ##  [91]  93 100  61  76  20  58  41  47  26  13
 ```
 
+---
 ## Ordering
 
 We can use the result of order to index our data frame. This will reorder the dataframe based on the order. In this case we are reordeing based on lowest expression.
@@ -116,6 +119,7 @@ head(my_df_ordered)
 ## 29   Gene29 NotSelected Glycolysis   20.02165
 ```
 
+---
 ## Ordering
 
 Often we want to order based on the highest value i.e. we want the highest expression genes at the top of our data frame. We can use the decreasing argument to control this.  of the time we actually 
@@ -137,6 +141,7 @@ head(my_df_ordered)
 ## 20   Gene20    Selected       TGFb   66.09706
 ```
 
+---
 ## Subsetting
 
 Anotehr opertaion we oftenwant to do is subset our dataset based on a specific condition i.e. I want to only look at Glycolysis genes, or I only want to gene above a certain expression threshold. To do this we need to use a logical operator test to see if this if something is TRUE.
@@ -190,7 +195,6 @@ my_df_ordered[idx,]
 ```
 
 ---
-
 ## Combining logical vectors
 
 Logical vectors can be used in combination in order to index vectors. To combine logical vectors we can use some common R operators.
@@ -259,6 +263,7 @@ my_df[logical_index,]
 
 
 
+---
 ## Merging
 
 A common operation is to join two data frames by a column of common values.
@@ -800,6 +805,7 @@ plot(merge_df[,c(4,5)])
 
 ![](introToR_Session2_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
 
+---
 ## Base plotting
 
 Many plots types like factors. This helps the plotting deal with dividing your data into categories.
@@ -841,6 +847,7 @@ plot(merge_df[,3])
 
 ![](introToR_Session2_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
 
+---
 ## Base plotting
 
 There are also some functions for making specific plots, like boxplot.
@@ -852,6 +859,7 @@ boxplot(Expression ~ pathway, merge_df)
 
 ![](introToR_Session2_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
 
+---
 ## Beyond Base plots
 For more advance plots we recommend you check out our ggplot2 training. [R graph gallery](https://r-graph-gallery.com/index.html) is also a really useful website that has example plots and the code used to generate them. 
 
