@@ -43,7 +43,7 @@ jobs:
       - name: Query dependencies
         run: |
           install.packages('remotes')
-          saveRDS(remotes::dev_package_deps("introToR/",dependencies = TRUE), ".github/depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps("introToR_abridged/",dependencies = TRUE), ".github/depends.Rds", version = 2)
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
 
@@ -58,7 +58,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_deps("introToR/",dependencies = TRUE)
+          remotes::install_deps("introToR_abridged/",dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("BiocManager")
           BiocManager::install("rmarkdown")
@@ -76,11 +76,11 @@ jobs:
       - name: Install package
         if: github.ref == 'refs/heads/master' 
         run: |
-          devtools::install("introToR/",dependencies = TRUE,quick = TRUE)
+          devtools::install("introToR_abridged/",dependencies = TRUE,quick = TRUE)
         shell: Rscript {0}
 
       - name: CompileCourse
         run: |
           require(compileCourses)
-          compileCourses::compileSingleCourseMaterial(repo="RockefellerUniversity",subdir="introToR",branch="master")
+          compileCourses::compileSingleCourseMaterial(repo="RockefellerUniversity",subdir="introToR_abridged",branch="master")
         shell: Rscript {0}
