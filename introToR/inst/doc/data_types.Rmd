@@ -1,0 +1,81 @@
+---
+title: "Session 1 - Data Types"
+author: "Rockefeller University, Bioinformatics Resource Centre"
+date: "https://rockefelleruniversity.github.io/RU_introtoR_abridged/"
+output: 
+  html_document:
+    number_sections: false  ## if you want number sections at each table header
+    theme: united  # many options for theme, this one is my favorite.
+    highlight: tango  # specifies the syntax highlighting style
+params:
+  toMessage: false    
+---
+
+```{r, setup,include=FALSE}
+toMessage <- ifelse(!is.null(params$toMessage),params$toMessage,FALSE)
+message(toMessage)
+```
+
+<p>&nbsp;</p>
+These exercises are about the vector sections of [Introduction to R](https://rockefelleruniversity.github.io/RU_introtoR_abridged/). 
+
+
+
+**Exercise 1**
+
+- Create a vector containing the values 1,2,3,4,5
+```{r,echo=toMessage}
+x <- c(1,2,3,4,5)
+x
+```
+- Create a vector containing the values 1 to 100
+```{r,echo=toMessage}
+x <- 1:100
+x
+```
+- Create a vector containing the values  0,5,10,15,20
+```{r,echo=toMessage}
+x <- seq(0,20,5)
+x
+```
+- Create a new vector, with all but the first and last value of the previous vector.
+```{r,echo=toMessage}
+y <- x[-c(1,length(x))]
+y
+```
+
+**Exercise 2** 
+
+- Read in the file *categoriesAndExpression.txt* from the *data* directory of the course material.
+```{r,echo=toMessage}
+my_df <- read.table("data/categoriesAndExpression.txt",sep="\t",header=T)
+```
+
+- Subset the data frame to only the first 5 genes and remove the second column. 
+
+```{r,echo=toMessage}
+my_df_subset <- my_df[1:5,-2]
+my_df_subset
+```
+
+- Subset the data frame to the last 5 genes and remove the second and third column. 
+
+```{r}
+my_df_subset <- my_df[(nrow(my_df)-4):nrow(my_df),-c(2,3)]
+my_df_subset
+```
+
+- Calculate the log2 of the expression level for the subset data frame and add it as a new column.
+
+```{r,echo=toMessage}
+my_df_subset$log2_expression <- log2(my_df_subset$Expression)
+my_df_subset
+```
+
+- Export your data as a excel spreadsheet
+```{r}
+library(rio)
+export(my_df_subset,"data/subset_genes.xlsx")
+
+```
+
