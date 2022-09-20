@@ -18,93 +18,98 @@ if(params$isSlides != "yes"){
 
 
 
-## ----echo=T,eval=T------------------------------------------------------------
-aVector <- c(1,2,3,4,5,6,7,8,9,10)
-aMatrix <- matrix(aVector,ncol=2,nrow=5,byrow = TRUE)
-aFactor <- factor(c("R","Python","R","R","Python"),levels = c("R","Python"))
-aDataFrame <- data.frame(Number=c(1,2,3,4,5),Factor=aFactor)
+## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
+if(params$isSlides == "yes"){
+  cat("class: inverse, center, middle
+
+# Ordering, selecting and merging
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html> 
+
+---
+"    
+  )
+}else{
+  cat("# Ordering, selecting and merging
+
+---
+"    
+  )
+  
+}
 
 
-## ----echo=T,eval=T------------------------------------------------------------
-aVector <- c(1,2,3,4,5,6,7,8,9,10)
-aVector[10]
-aVector[10] <- 0
-aVector
+## -----------------------------------------------------------------------------
+my_df <- read.table("data/categoriesAndExpression.txt",sep="\t",header=T)
+head(my_df)
 
 
-
-## ----echo=T,eval=T,tidy=FALSE-------------------------------------------------
-aMatrix <- matrix(aVector,ncol=2,
-                  nrow=5,byrow = TRUE)
-aMatrix
-aMatrix[1,]
-aMatrix[,1]
-
-
-## ----echo=T,eval=T,tidy=FALSE-------------------------------------------------
-aMatrix[1,1] <- 0
-aMatrix[,2] <- 100
-aMatrix
-
-
-## ----echo=T,eval=T,tidy=FALSE-------------------------------------------------
-aMatrix <- matrix(aVector,ncol=2,
-                  nrow=5,byrow = TRUE)
-aMatrix
+## -----------------------------------------------------------------------------
+order(my_df[,4])
 
 
 
-## ----echo=T,eval=T,tidy=FALSE-------------------------------------------------
-aMatrix[1,2] <- "Word"
-aMatrix
+## -----------------------------------------------------------------------------
+my_df_ordered <- my_df[order(my_df[,4]),]
+
+head(my_df_ordered)
 
 
-## ----echo=T,eval=T------------------------------------------------------------
-aVector <- c(1,2,3,4,5,6,7,8,9,10)
-aVector > 9
-aFactor <- factor(c("R","Python","R","R","Python"),levels = c("R","Python"))
-aDataFrame <- data.frame(Number=c(1,2,3,4,5),Factor=aFactor)
-aDataFrame
-aDataFrame$Factor == "R"
+## -----------------------------------------------------------------------------
+my_df_ordered <- my_df[order(my_df[,4], decreasing = T),]
+
+head(my_df_ordered)
 
 
-## ----echo=T,eval=T------------------------------------------------------------
-aVector <- c(1,2,3,4,5,6,7,8,9,10)
-aVector > 5
-aVector[aVector > 5] <- 10
-aVector
+## -----------------------------------------------------------------------------
+my_df_ordered$Expression > 70
 
 
-## ----echo=T,eval=T,tidy=T-----------------------------------------------------
 
-aFactor <- factor(c("R","Python","R","R","Python"),
-                  levels = c("R","Python"))
-aDataFrame <- data.frame(Number=c(1,2,3,4,5),
-                         Factor=aFactor)
-aDataFrame[aDataFrame$Factor == "R",2] <- "NotPython"
-aDataFrame
+## ----vectorLogicalFromOperators_introtoR--------------------------------------
+
+idx <- my_df_ordered$Expression > 70
+my_df_ordered[idx,]
 
 
-## ----echo=T,eval=T,tidy=FALSE-------------------------------------------------
 
-aDataFrame <- data.frame(Number=c(1,2,3,4,5),
-                         Factor=aFactor)
-aDataFrame$Factor <- factor(aDataFrame$Factor,
-                            levels = c("R","Python","NotPython"))
-aDataFrame[aDataFrame$Factor == "R",2] <- "NotPython"
-aDataFrame
+## -----------------------------------------------------------------------------
+my_df_ordered[my_df_ordered$Expression > 60 & my_df_ordered$pathway == "TGFb",]
 
 
-## ----echo=T,eval=T------------------------------------------------------------
-Table <- read.table("data/readThisTable.csv",sep=",",header=T,row.names=1)
-Table[1:3,]
-
-## ----echo=T,eval=F------------------------------------------------------------
-## write.table(Table,file="data/writeThisTable.csv", sep=",", row.names =F,col.names=T)
+## ----vectorInFuncion_introtoR-------------------------------------------------
+my_favorite_genes <- c("Gene1","Gene10","Gene15")
+logical_index <- my_df$geneName %in% my_favorite_genes
+logical_index
 
 
-## ----echo=T,eval=F------------------------------------------------------------
-## ?merge
+
+## -----------------------------------------------------------------------------
+my_df[logical_index,]
+
+
+## ---- echo=F, eval=F----------------------------------------------------------
+## df_out <- data.frame("Gene"=my_df[,1], "Length"=sample(200:2000,100))
+## 
+## write.table(df_out,  "data/gene_lengths.txt",sep="\t",col.names=T, row.names=F)
+
+
+## ----dataframesMergeData1_introtoR--------------------------------------------
+my_df2 <- read.table("data/gene_lengths.txt",sep="\t",header=T)
+
+nrow(my_df2)
+
+head(my_df2)
+
+
+
+## ----dataframesMergeData2_introtoR--------------------------------------------
+nrow(my_df)
+
+
+## -----------------------------------------------------------------------------
+merge_df <- merge(my_df, my_df2, by.x="geneName","Gene", all=FALSE)
+merge_df
 
 
 ## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
@@ -131,18 +136,6 @@ if(params$isSlides == "yes"){
 ## -----------------------------------------------------------------------------
 x <- 1:10
 x[x < 4]
-
-
-## ----message=T----------------------------------------------------------------
-x <- TRUE
-if(x){
-  message("x is true")
-}
-x <- FALSE
-if(x){
-  message("x is true")
-}
-
 
 
 ## ----message=T----------------------------------------------------------------
@@ -207,15 +200,6 @@ ifelse(x == 3,"same",
 
 
 ## ---- message=TRUE------------------------------------------------------------
-x <- 1
-while(x < 3){
-  message("x is ",x," ")
-  x <- x+1
-}
-message("Finally x is not less than 3")
-
-
-## ---- message=TRUE------------------------------------------------------------
 x <- 1:5
 for(i in x){
   message(i," ", appendLF = F)
@@ -266,64 +250,6 @@ for(i in 1:13){
 }
 
 
-## ----message=T,eval=F---------------------------------------------------------
-## x <- 1:13
-## 
-## for(i in 1:13){
-##   if(i < 10){
-##     message("Number ",i," is less than 10")
-##   }else if(i == 10){
-##     message("Number ",i," is  10")
-##     break
-##   }else{
-##     message("Number ",i," is greater than  10")
-##   }
-## }
-
-
-## ----message=T,eval=T,echo=F--------------------------------------------------
-x <- 1:13
-
-for(i in 1:13){
-  if(i < 10){
-    message("Number ",i,
-            " is less than 10")
-  }else if(i == 10){
-    message("Number ",i,
-            " is  10")
-    break
-  }else{
-    message("Number ",i,
-            " is greater than  10") 
-  }
-}
-
-
-## -----------------------------------------------------------------------------
-matExample <- matrix(c(1:4),nrow=2,ncol=2,byrow=T)
-matExample
-
-
-## -----------------------------------------------------------------------------
-apply(matExample,1,mean)
-
-
-## -----------------------------------------------------------------------------
-apply(matExample,2,mean)
-
-
-## -----------------------------------------------------------------------------
-apply(matExample,1,paste,collapse=";")
-
-
-## -----------------------------------------------------------------------------
-lapply(c(1,2),mean)
-
-
-## -----------------------------------------------------------------------------
-lapply(list(1,c(NA,1),2),mean, na.rm=T)
-
-
 ## -----------------------------------------------------------------------------
 exampleVector <- c(1,2,3,4,5)
 exampleList <- list(1,2,3,4,5)
@@ -356,256 +282,63 @@ sapply(exampleList, summary)
 if(params$isSlides == "yes"){
   cat("class: inverse, center, middle
 
-# Custom functions
+# Plotting
 
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html> 
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html>
 
 ---
-"    
+"
   )
 }else{
-  cat("# Custom functions
+  cat("# Plotting
 
 ---
-"    
+"
   )
-  
-}
 
-
-## ----makingfunctions,eval=FALSE-----------------------------------------------
-## myFirstFunction  <- function(MYARGUMENT){
-##   ...................
-##   ..CODE_TO_EXECUTE..
-##   ...................
-##   return(MYRESULT)
-## }
-## 
-## myFirstFunction(MYARGUMENT=MY_USER_SUPPLIED_ARGUMENT)
-## 
-
-
-## ----makingfunctionsb---------------------------------------------------------
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2
-  return(sumNum)
-}
-
-myResult <- myFirstFunction(num1=2,num2=3)
-
-myResult
-
-
-## ----makingfunctionsc,error=TRUE----------------------------------------------
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2
-  multipleNum <- num1*num2
-  return(sumNum,multipleNum)
-}
-
-myResult <- myFirstFunction(num1=2,num2=3)
-
-
-
-## ----makingfunctionsd,error=FALSE---------------------------------------------
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2
-  multipleNum <- num1*num2
-  VectorOfResults <- c(sumNum,multipleNum)
-  names(VectorOfResults) <- c("multiple","sum")
-  return(VectorOfResults)
-}
-
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-
-
-## ----makingfunctionse,error=FALSE---------------------------------------------
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2
-  multipleNum <- num1*num2
-  InputNumbers <- c(FirstNum=num1,SecondNum=num2)
-  DF <- data.frame(Sum=sumNum,Multiple=multipleNum)
-  listToReturn <- list(Input=InputNumbers,Result=DF)
-  return(listToReturn)
-}
-
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-
-
-## ----makingfunctionsf,error=FALSE---------------------------------------------
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2
-  multipleNum <- num1*num2
-  InputNumbers <- c(FirstNum=num1,SecondNum=num2)
-  DF <- data.frame(Sum=sumNum,Multiple=multipleNum)
-  listToReturn <- list(Input=InputNumbers,Result=DF)
-  message("Before return")
-  return(listToReturn)
-  message("After return")
-}
-
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-
-
-## ----makingfunctionsg,error=FALSE---------------------------------------------
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2
-  multipleNum <- num1*num2
-  InputNumbers <- c(FirstNum=num1,SecondNum=num2)
-  DF <- data.frame(Sum=sumNum,Multiple=multipleNum)
-  listToReturn <- list(Input=InputNumbers,Result=DF)
-  listToReturn
-}
-
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-
-
-## ----makingfunctionsh,error=TRUE----------------------------------------------
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2
-  return(sumNum)
-}
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-sumNum
-
-
-## ----makingfunctionsi,error=FALSE---------------------------------------------
-my3rdNumber <- 4
-myFirstFunction  <- function(num1,num2){
-  sumNum <- num1+num2+my3rdNumber
-  return(sumNum)
-}
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-
-
-## ----makingfunctionsj,error=FALSE---------------------------------------------
-my3rdNumber <- 4
-myFirstFunction  <- function(num1,num2){
-  my3rdNumber <- num1+num2+my3rdNumber
-  return(my3rdNumber)
-}
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-my3rdNumber
-
-
-## ----makingfunctionsk,error=FALSE---------------------------------------------
-my3rdNumber <- 4
-myFirstFunction  <- function(num1,num2){
-  my3rdNumber <<- num1+num2+my3rdNumber
-  return(my3rdNumber)
-}
-myResult <- myFirstFunction(num1=2,num2=3)
-myResult
-my3rdNumber
-
-
-## ----makingfunctionsl,error=FALSE---------------------------------------------
-myFirstFunction  <- function(num1=1,num2=3){
-  my3rdNumber <- num1+num2+my3rdNumber
-  return(my3rdNumber)
-}
-myFirstFunction()
-myFirstFunction(3,4)
-
-
-## ----makingfunctions_zscores--------------------------------------------------
-my_zscore  <- function(my_number, my_vector){
-  my_mean <- mean(my_vector)
-  message("Mean is ", my_mean)
-  diff_from_mean <- my_number-my_mean
-  stdev <- sd(my_vector)
-  my_z <- diff_from_mean/stdev
-  return(my_z)
-}
-
-A <- rnorm(20)
-
-my_zscore(my_number=A[1], my_vector=A)
-
-
-
-## ----makingfunctionsO,error=FALSE,eval=FALSE----------------------------------
-## debug(myFirstFunction)
-## undebug(myFirstFunction)
-
-
-## ---- message=F---------------------------------------------------------------
-sapply(A, my_zscore, my_vector=A)
-
-
-
-## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
-if(params$isSlides == "yes"){
-  cat("class: inverse, center, middle
-
-# Getting Additional Libraries
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html> 
-
----
-"    
-  )
-}else{
-  cat("# Getting Additional Libraries
-
----
-"    
-  )
-  
-}
-
-
-## ----eval=F-------------------------------------------------------------------
-## library(ggplot2)
-
-
-## ----eval=F-------------------------------------------------------------------
-## library()
-
-
-## ----eval=F-------------------------------------------------------------------
-## install.packages("Hmisc")
-
-
-## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
-if(params$isSlides == "yes"){
-  cat("class: inverse, center, middle
-
-# Scripts
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html> 
-
----
-"    
-  )
-}else{
-  cat("# Scripts
-
----
-"    
-  )
-  
 }
 
 
 ## -----------------------------------------------------------------------------
-source("scripts/dayOfWeek.r")
-dayOfWeek()
+plot(merge_df[,c(4,5)])
 
 
-## ----eval=F-------------------------------------------------------------------
-## args <- commandArgs(TRUE)
-## myFirstArgument <- args[1]
-## myFirstArgument
+
+## ---- eval=F------------------------------------------------------------------
+## plot(merge_df[,3])
 
 
-## ----eval=F-------------------------------------------------------------------
-## as.numeric(myFirstArgument)
+## ---- echo=F------------------------------------------------------------------
+try(plot(merge_df[,3]))
+print(1)
+
+
+## -----------------------------------------------------------------------------
+merge_df[,3] <- factor(merge_df[,3])
+plot(merge_df[,3])
+
+
+## -----------------------------------------------------------------------------
+boxplot(Expression ~ pathway, merge_df)
+
+
+
+## ---- eval=F------------------------------------------------------------------
+## library(ggplot2)
+## 
+## ggplot(merge_df, aes(x=pathway, y=Expression, fill=pathway))+
+##   geom_violin()+
+##   geom_jitter(width=0.1)+
+##   theme_linedraw()+
+##   ggtitle("Gene Expression in Glycolyis and TGFb pathways")
+
+
+## ---- echo=F------------------------------------------------------------------
+library(ggplot2)
+
+ggplot(merge_df, aes(x=pathway, y=Expression, fill=pathway))+
+  geom_violin()+
+  geom_jitter(width=0.1)+
+  theme_linedraw()+
+  ggtitle("Gene Expression in Glycolyis and TGFb pathways")
 

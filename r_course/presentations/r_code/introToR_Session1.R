@@ -40,16 +40,11 @@ if(params$isSlides == "yes"){
 
 
 
-## ----setwd_introtoR,eval=F----------------------------------------------------
-## setwd("/PathToMyDownload/Intro_To_R_1Day-master/r_course")
-## # e.g. setwd("~/Downloads/Intro_To_R_1Day/r_course")
-
-
 ## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
 if(params$isSlides == "yes"){
   cat("class: inverse, center, middle
 
-# Background of R
+# What is R?
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html> 
 
@@ -57,13 +52,20 @@ if(params$isSlides == "yes"){
 "    
   )
 }else{
-  cat("# Background of R
+  cat("# What is R?
 
 ---
 "    
   )
   
 }
+
+
+
+## -----------------------------------------------------------------------------
+#potential other r plots
+#https://stackoverflow.blog/2017/10/31/disliked-programming-languages/
+#https://stackoverflow.blog/2017/10/31/disliked-programming-languages/
 
 
 
@@ -98,9 +100,9 @@ sqrt(25)-1
 
 
 ## ----usingFunctions_introtoR--------------------------------------------------
-min(2,4,6)
-sum(2,4,6)
-max(2,4,6)
+min(2, 4, 6)
+sum(2, 4, 6)
+max(2, 4, 6)
 
 
 ## ----usingFunctionsSQRT_introtoR----------------------------------------------
@@ -108,8 +110,8 @@ max(2,4,6)
 
 
 ## ----usingFunctionsArgOrder_introtoR------------------------------------------
-min(5,4,6)
-min(6,4,5)
+min(5, 4, 6)
+min(6, 4, 5)
 
 
 ## ----usingFunctionsSetNames_introtoR,eval=F-----------------------------------
@@ -120,7 +122,7 @@ min(6,4,5)
 ## ----usingFunctionsDefaultOrder_introtoR,eval=F-------------------------------
 ## dir(full.names=T)
 ## # Is equivalent to...
-## dir(".",NULL,FALSE,T)
+## dir(".", NULL, FALSE, T)
 
 
 ## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
@@ -213,20 +215,15 @@ y <- 6:10
 y
 
 
-## ----vectorSeqFromSeqAndRep_introtoR------------------------------------------
-seq(from=1,to=5,by=2)
-rep(c(1,5,10),3)
-
-
 ## ----vectorIndexing_introtoR--------------------------------------------------
-z <- seq(from=2,to=20,by=2) 
+z <- c("a","b","c","d","e","f")
 z
 z[1]
-z[8]
+z[4]
 
 
 ## ----vectorIndexingBy2_introtoR-----------------------------------------------
-z[c(1,6)]
+z[c(1,4)]
 
 
 ## ----vectorIndexingByNeg_introtoR---------------------------------------------
@@ -235,13 +232,13 @@ z[-5]
 
 ## ----vectorIndexingAndReplace_introtoR----------------------------------------
 z
-z[5] <- 1000
+z[5] <- "Hello"
 z
 
 
 ## ----vectorIndexingUsingVectors_introtoR--------------------------------------
 y
-z[y] <- 0
+z[y] <- "Hello again"
 z
 
 
@@ -272,219 +269,6 @@ x+c(1,2)
 
 ## ----vectorShorterRecycle_introtoR--------------------------------------------
 x+c(1,2,3)
-
-
-## ----vectorCharacters_introtoR------------------------------------------------
-y <- c("ICTEM","CommonWealth","Wolfson")
-y[2]
-
-
-## ----vectorCharacterNames_introtoR--------------------------------------------
-x <- c(1:3)
-names(x) <- y
-x
-
-
-## ----vectorCharacterNamesIndex_introtoR---------------------------------------
-x[c("ICTEM","Wolfson")]
-
-
-## ----vectorCharacterNamesIndexMissing_introtoR--------------------------------
-x[c("Strand")]
-
-
-## ----vectorUnique_introtoR----------------------------------------------------
-geneList <- c("Gene1","Gene2","Gene3","Gene4","Gene5","Gene1","Gene3")
-unique(geneList)
-
-
-## ----vectorLogical_introtoR---------------------------------------------------
-z <-  c(TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE) 
-# or
-z <- c(T,F,T,F,T,F,T,F,T,F) 
-
-z
-
-
-## ----vectorLogicalOtherVector_introtoR----------------------------------------
-x <- 1:10
-x[z]
-
-
-## ----vectorInFuncion_introtoR-------------------------------------------------
-geneList <- c("Gene1","Gene2","Gene3","Gene4","Gene5","Gene1","Gene3")
-secondGeneList <- c("Gene5","Gene3")
-logical_index <- geneList %in% secondGeneList
-logical_index
-
-geneList[logical_index]
-
-
-## ----vectorLogicalFromOperators_introtoR--------------------------------------
-x <- 1:10
-x > 5
-x[x > 5]
-
-
-## ----vectorLogicalCombine_introtoR--------------------------------------------
-x <- 1:10
-!x > 4
-x > 4 & x < 7
-x > 4 | x < 7
-
-
-## ----vectorLogicalCombineIndex_introtoR---------------------------------------
-x <- 1:10
-x
-x[x > 4 & x < 7]
-x[x > 4 & !x < 7]
-
-
-## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
-if(params$isSlides == "yes"){
-  cat("class: inverse, center, middle
-
-# Matrices
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html> 
-
----
-"    
-  )
-}else{
-  cat("# Matrices
-
----
-"    
-  )
-  
-}
-
-
-
-## ----matricesCreate_introtoR--------------------------------------------------
-narrowMatrix <- matrix(1:10, nrow=5, ncol=2)
-narrowMatrix
-
-wideMatrix <- matrix(1:10, nrow=2, ncol=5)
-wideMatrix
-
-
-## ----matricesCreateByRow_introtoR---------------------------------------------
-wideMatrix <- matrix(1:10, nrow=2, ncol=5)
-wideMatrix
-
-wideMatrixByRow <- matrix(1:10, nrow=2, ncol=5, byrow=TRUE)
-wideMatrixByRow
-
-
-## ----matricesDim_introtoR-----------------------------------------------------
-dim(narrowMatrix)
-nrow(narrowMatrix)
-ncol(narrowMatrix)
-
-
-## ----matricesCbind_introtoR---------------------------------------------------
-x <- 1:5
-y <- 11:15
-z <- 21:22
-newMatrix <- cbind(x,y)
-newMatrix
-
-
-## ----matricesRbind_introtoR---------------------------------------------------
-newerMatrix <- rbind(newMatrix,z)
-newerMatrix
-
-
-## ----matricesJoinIncompatable_introtoR----------------------------------------
-recycledMatrix2 <- matrix(1:5,ncol=2,nrow=3)
-recycledMatrix2
-
-
-## ----matricesJoinIncompatableClip_introtoR------------------------------------
-recycledMatrix3 <- rbind(recycledMatrix2,c(1:5))
-recycledMatrix3
-
-
-## ----matricesNames_introtoR---------------------------------------------------
-namedMatrix <- matrix(1:10,ncol=5,nrow=2)
-colnames(namedMatrix) <- paste("Column",1:5,sep="_")
-rownames(namedMatrix) <- paste("Row",1:2,sep="_")
-namedMatrix
-
-
-## ----matricesNamesColRow_introtoR---------------------------------------------
-colnames(namedMatrix)
-rownames(namedMatrix)
-
-
-## ----matricesIndexingShow_introtoR--------------------------------------------
-narrowMatrix
-
-
-## ----matricesIndexingExample_introtoR-----------------------------------------
-narrowMatrix[2,1]
-
-
-## ----matricesIndexingExampleByCol_introtoR------------------------------------
-narrowMatrix[,2]
-
-
-## ----matricesIndexingExampleByRow_introtoR------------------------------------
-narrowMatrix[3,]
-
-
-## ----matricesIndexingExampleByMultipleRow_introtoR----------------------------
-narrowMatrix[c(2,3),]
-
-
-## ----matricesIndexingExampleByName_introtoR-----------------------------------
-colnames(narrowMatrix) <- paste("Column",1:2,sep="_")
-rownames(narrowMatrix) <- paste("Row",1:5,sep="_")
-narrowMatrix[,"Column_1"]
-narrowMatrix["Row_1",]
-narrowMatrix["Row_1","Column_1"]
-
-
-## ----matricesIndexingExampleByLogic_introtoR----------------------------------
-narrowMatrix
-narrowMatrix[,1]
-narrowMatrix[,1] < 5
-
-
-## ----matricesIndexingExampleByLogicRow_introtoR-------------------------------
-narrowMatrix[narrowMatrix[,1] < 5,]
-
-
-## ----matricesArithmetric_introtoR---------------------------------------------
-narrowMatrix
-narrowMatrix[1,1]+2
-narrowMatrix[1,]+2
-
-
-## -----------------------------------------------------------------------------
-mean(narrowMatrix)
-
-
-
-## ----matricesReplace_introtoR-------------------------------------------------
-narrowMatrix
-narrowMatrix[1,1] <- 10
-narrowMatrix[,2] <- 1
-narrowMatrix
-
-
-## ----matricesOneTypeOnlyNoError_introtoR,error=T------------------------------
-narrowMatrix[,2] *2
-
-## ----matricesOneTypeOnlyExampleForError_introtoR------------------------------
-narrowMatrix[1,1] <- "Not_A_Number"
-narrowMatrix
-
-
-## ----matricesOneTypeOnlyWithError_introtoR,error=T----------------------------
-narrowMatrix[,2] *2
 
 
 ## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
@@ -585,33 +369,28 @@ dfExample <- data.frame(Name=patientName, Type=patientType, Survival_Time=surviv
 dfExample
 
 
-## ----dataframesReplacement_introtoR-------------------------------------------
+## ----matricesIndexingShow_introtoR--------------------------------------------
 dfExample
-dfExample[dfExample[,"Survival_Time"] > 10,]
 
 
-## ----dataframesReplacementbyDollar_introtoR-----------------------------------
-dfExample <- data.frame(Name=patientName,Type=patientType,Survival_Time=survivalTime)
-dfExample$Survival_Time
-dfExample[dfExample$Survival_Time < 10,]
+## ----matricesIndexingExample_introtoR-----------------------------------------
+dfExample[2,1]
 
 
-## ----dataframesIndexbyDollar_introtoR-----------------------------------------
-dfExample$Surv
+## ----matricesIndexingExampleByCol_introtoR------------------------------------
+dfExample[,2]
 
 
-## ----dataframesIndexbyName_introtoR, eval=F-----------------------------------
-## dfExample[,"Surv"]
+## ----matricesIndexingExampleByRow_introtoR------------------------------------
+dfExample[3,]
 
 
-## ----dataframesNewbyDollar_introtoR-------------------------------------------
-dfExample
-dfExample$newColumn <- rep("newData",nrow(dfExample))
-dfExample
+## ----matricesIndexingExampleByMultipleRow_introtoR----------------------------
+dfExample[c(2,3),]
 
 
 ## ----dataframesNoReplace_introtoR---------------------------------------------
-dfExample[dfExample[,"Survival_Time"] < 10,"Survival_Time"] <- 0
+dfExample[1,3] <- "Forever"
 dfExample
 
 
@@ -632,73 +411,38 @@ dfExample
 
 
 
-## ----dataframesAndNoFactors_introtoR------------------------------------------
-dfExample <- data.frame(Name=patientName,
-                        Type=patientType,
-                        Survival_Time=survivalTime,
-                        stringsAsFactors = T)
+## ----dataframesReplacement_introtoR-------------------------------------------
+dfExample
+dfExample[dfExample[,"Survival_Time"] > 10,]
 
 
-dfExample[dfExample[,"Survival_Time"] < 10,"Name"] <- "patientX"
+## ----dataframesReplacementbyDollar_introtoR-----------------------------------
+dfExample <- data.frame(Name=patientName,Type=patientType,Survival_Time=survivalTime)
+dfExample$Survival_Time
+
+
+## ----dataframesNewbyDollar_introtoR-------------------------------------------
+dfExample
+dfExample$newColumn <- rep("newData",nrow(dfExample))
 dfExample
 
 
-
-## ----dataframesAndNoFactors_introtoR2-----------------------------------------
-dfExample <- data.frame(Name=patientName,
-                        Type=patientType,
-                        Survival_Time=survivalTime,
-                        stringsAsFactors = F)
+## ----matricesDim_introtoR-----------------------------------------------------
+dim(dfExample)
+nrow(dfExample)
+ncol(dfExample)
 
 
-dfExample[dfExample[,"Survival_Time"] < 10,"Name"] <- "patientX"
-dfExample
+## ----matricesCbind_introtoR---------------------------------------------------
+x <- 1:4
+newDF <- cbind(x,dfExample)
+newDF
 
 
-
-## ----dataframesOrder_introtoR-------------------------------------------------
-testOrder <- c(20,10,30)
-testOrder
-order(testOrder,decreasing=T)
-
-
-## -----------------------------------------------------------------------------
-testOrder[order(testOrder)]
-testOrder[order(testOrder,decreasing=T)]
-
-
-## ----dataframesOrderWithNA_introtoR-------------------------------------------
-testOrder <- c(2,1,NA,3)
-testOrder[order(testOrder,decreasing=T,na.last=T)]
-testOrder[order(testOrder,decreasing=T,na.last=F)]
-
-
-## ----dataframesOrderDecreasing_introtoR---------------------------------------
-dfExample
-dfExample[order(dfExample$Surv, decreasing=T),]
-
-
-## ----dataframesOrderMultiple_introtoR-----------------------------------------
-dfExample[order(dfExample$Type,
-                dfExample$Survival,
-                decreasing=T),]
-
-
-## ----dataframesMergeData1_introtoR--------------------------------------------
-dfExample <- data.frame(Name=patientName,Type=patientType,
-                        Survival_Time=survivalTime)
-dfExample 
-
-
-## ----dataframesMergeData2_introtoR--------------------------------------------
-dfExample2 <- data.frame(Name=patientName[1:3],
-                        height=c(6.1,5.1,5.5))
-dfExample2
-
-
-## ----dataframesMerge_introtoR-------------------------------------------------
-mergedDF <- merge(dfExample,dfExample2,by=1,all=F)
-mergedDF
+## ----matricesRbind_introtoR---------------------------------------------------
+z <- c(5,"patient5","male",25)
+newerDF <- rbind(newDF,z)
+newerDF
 
 
 ## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
@@ -724,30 +468,20 @@ if(params$isSlides == "yes"){
 
 
 ## ----listsExample_introtoR----------------------------------------------------
-firstElement <- c(1,2,3,4)
-secondElement <- matrix(1:10,nrow=2,ncol=5)
+firstElement <- 10
+secondElement <- c("a","b","c","d")
 thirdElement <- data.frame(colOne=c(1,2,4,5),colTwo=c("One","Two","Three","Four"))
 
 
 ## ----listsCreate_introtoR-----------------------------------------------------
-myList <- list(firstElement,secondElement,thirdElement)
+myList <- list(firstElement, secondElement, thirdElement)
 myList
-
-
-## ----listsCreateNnames_introtoR-----------------------------------------------
-myNamedList <- list(First=firstElement,Second=secondElement,
-                    Third=thirdElement)
-myNamedList
 
 
 ## ----listsCreateElements_introtoR---------------------------------------------
 myList <- list(firstElement,secondElement,thirdElement)
 myList[1]
 myList[[1]]
-
-
-## ----listsIndexElements_introtoR----------------------------------------------
-myNamedList$First
 
 
 ## ----listsCombine_introtoR----------------------------------------------------
@@ -758,69 +492,11 @@ myNamedList[c(1,4)]
 
 
 
-## ---- listsCombineVector_introtoR---------------------------------------------
-myList <- c(myList,c(4,4))
-myList[3:5]
-
-
 ## ----listsFlatten_introtoR----------------------------------------------------
 myNamedList <- list(First=c(1,2,3),Second=c(2,6,7),Third=c(1,4,7))
 myNamedList
 flatList <- unlist(myNamedList)
 flatList[1:7]
-
-
-## ----listsFlattenToMatrix_introtoR--------------------------------------------
-myNamedList <- list(First=c(1,2,3),Second=c(2,6,7),Third=c(1,4,7))
-flatList <- unlist(myNamedList)
-listAsMat <- matrix(flatList,
-                    nrow=length(myNamedList),
-                    ncol=3,
-                    byrow=T,
-                    dimnames=list(names(myNamedList)))
-listAsMat
-
-
-## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
-if(params$isSlides == "yes"){
-  cat("class: inverse, center, middle
-
-# Coercing data classes
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=720px></html> 
-
----
-"    
-  )
-}else{
-  cat("# Coercing data formats
-
----
-"    
-  )
-  
-}
-
-
-
-## -----------------------------------------------------------------------------
-class(namedMatrix)
-class(dfExample)
-
-
-## -----------------------------------------------------------------------------
-namedMatrix
-
-as.character(namedMatrix)
-
-as.vector(namedMatrix)
-
-
-## -----------------------------------------------------------------------------
-as.data.frame(namedMatrix)
-
-as.list(namedMatrix)
-
 
 
 ## ---- results='asis',include=TRUE,echo=FALSE----------------------------------
@@ -845,7 +521,7 @@ if(params$isSlides == "yes"){
 
 
 
-## ----echo=F-------------------------------------------------------------------
+## ---- echo=F------------------------------------------------------------------
 minRep <- rbind(cbind(matrix(rnorm(12,4),ncol=3,byrow = T),matrix(c(rnorm(9,4),rnorm(3,8)),ncol=3,byrow = T)),
 cbind(matrix(rnorm(12,10),ncol=3,byrow = T),matrix(c(rnorm(6,3),rnorm(6,10)),ncol=3,byrow = T)))
 colnames(minRep) <- paste0(c("Sample_"),
@@ -855,6 +531,12 @@ minRepdf <- data.frame(Gene_Name=paste("Gene",letters[1:8],sep="_"),minRep)
 #write.table(minRepdf,file="readThisTable.csv",sep=",",row.names=F)
 kable(minRepdf[,1:4], format='html')
 
+
+
+## ---- eval =F-----------------------------------------------------------------
+## getwd()
+## dir()
+## setwd("~/Downloads/RockefellerUniversity-Intro_To_R/r_course")
 
 
 ## ----echo=T-------------------------------------------------------------------
@@ -868,23 +550,9 @@ Table[1:4,1:3]
 
 
 ## ----echo=T-------------------------------------------------------------------
-Table <- read.table("data/readThisTable.csv", sep=",", header=T, stringsAsFactors=F)
-
-
-## ----echo=T-------------------------------------------------------------------
 URL <- "http://rockefelleruniversity.github.io/readThisTable.csv"
 Table <- read.table(URL,sep=",",header=T)
 Table[1:2,1:3]
-
-
-## ----eval=F-------------------------------------------------------------------
-## Table <- read.table(file="clipboard",sep=",",header=T)
-
-
-## ----echo=T-------------------------------------------------------------------
-x <- scan("data/readThisTable.csv",sep=",",
-what = c("character",rep("numeric", 6)),skip=1)
-x[1:3]
 
 
 ## ----echo=T-------------------------------------------------------------------
@@ -901,7 +569,7 @@ head(Table)
 
 ## -----------------------------------------------------------------------------
 tail(Table)
-head(Table,3)
+head(Table, 3)
 
 
 ## ----echo=T,eval=FALSE--------------------------------------------------------
@@ -926,24 +594,7 @@ Table[1:2,]
 
 
 ## ----echo=T,eval=TRUE---------------------------------------------------------
-Table <- import_list("data/readThisXLS.xls")
-names(Table)
-
-
-## ----echo=T,eval=TRUE---------------------------------------------------------
-## Table[["ExpressionScores"]][1:2,]
-Table$ExpressionScores[1:2,]
-Table$Metadata[1:2,]
-
-
-## ----echo=T,eval=TRUE---------------------------------------------------------
 ExpressionScores <- Table$ExpressionScores
-export(ExpressionScores,file = "data/writeThisXLSX.xlsx")
-
-
-
-## ----echo=T,eval=TRUE---------------------------------------------------------
-names(Table) <- c("expr","meta")
-export(Table,file = "data/writeThisMultipleXLSX.xlsx")
+export(ExpressionScores, file = "data/writeThisXLSX.xlsx")
 
 

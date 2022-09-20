@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>introToR_Session2.utf8</title>
+    <title>introToR_Session2.knit</title>
     <meta charset="utf-8" />
     <meta name="author" content="Rockefeller University, Bioinformatics Resource Centre" />
+    <script src="libs/header-attrs-2.16/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="metropolisCustom.css" type="text/css" />
     <link rel="stylesheet" href="metropolis-fontsCustom.css" type="text/css" />
@@ -12,6 +13,7 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Introduction to R, Session 2
 <html>
 <div style="float:left">
@@ -19,8 +21,13 @@ class: center, middle, inverse, title-slide
 </div>
 <hr color='#EB811B' size=1px width=796px>
 </html>
+]
+.author[
 ### Rockefeller University, Bioinformatics Resource Centre
+]
+.date[
 ### <a href="http://rockefelleruniversity.github.io/Intro_To_R_1Day/" class="uri">http://rockefelleruniversity.github.io/Intro_To_R_1Day/</a>
+]
 
 ---
 
@@ -30,319 +37,500 @@ class: center, middle, inverse, title-slide
 
 ## Overview
 
-- [Recap](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session2.html#recap)
 - [Conditions and Loops](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session2.html#conditions_and_loops)
-- [Libraries](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session2.html#getting_additional_libraries)
-- [Writing scripts](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session2.html#scripts)
 
+
+
+&lt;!-- --- --&gt;
+&lt;!-- #  Recap --&gt;
+
+&lt;!-- Session 1 covered introduction to R data types and import/export of data. --&gt;
+
+&lt;!-- - [Background to R](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#background-to-r) --&gt;
+&lt;!-- - [Data types in R](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#data_types_in_r) --&gt;
+&lt;!-- - [Reading and writing in R](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#reading-and-writing-data-in-r) --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+&lt;!-- R stores data in five main data types. --&gt;
+
+&lt;!-- - **Vector** - Ordered collection of single data type (numeric/character/logical). --&gt;
+&lt;!-- - **Matrix** - Table (ordered 2D collection) of single data type (numeric/character/logical). --&gt;
+&lt;!-- - **Factors** - Ordered collection of ordinal or nominal catagories. --&gt;
+&lt;!-- - **Data frame** - Table (ordered 2D array) of multiple data types of same length. --&gt;
+&lt;!-- - **List** - Ordered collection of multiple data types of differing length. --&gt;
+
+&lt;!-- ```{r,echo=T,eval=T} --&gt;
+&lt;!-- aVector &lt;- c(1,2,3,4,5,6,7,8,9,10) --&gt;
+&lt;!-- aMatrix &lt;- matrix(aVector,ncol=2,nrow=5,byrow = TRUE) --&gt;
+&lt;!-- aFactor &lt;- factor(c("R","Python","R","R","Python"),levels = c("R","Python")) --&gt;
+&lt;!-- aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5),Factor=aFactor) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+&lt;!-- We can access and change information in our data.types using **indexing** with **[]**  (or **[[]]** for lists). --&gt;
+
+&lt;!-- ```{r,echo=T,eval=T} --&gt;
+&lt;!-- aVector &lt;- c(1,2,3,4,5,6,7,8,9,10) --&gt;
+&lt;!-- aVector[10] --&gt;
+&lt;!-- aVector[10] &lt;- 0 --&gt;
+&lt;!-- aVector --&gt;
+
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+&lt;!-- For matricies and data frames we use two indexes, specifying columns and rows. **matrix[_rowIndex_,_columnIndex_]** --&gt;
+
+&lt;!-- .pull-left[ --&gt;
+&lt;!-- ```{r,echo=T,eval=T,tidy=FALSE} --&gt;
+&lt;!-- aMatrix &lt;- matrix(aVector,ncol=2, --&gt;
+&lt;!--                   nrow=5,byrow = TRUE) --&gt;
+&lt;!-- aMatrix --&gt;
+&lt;!-- aMatrix[1,] --&gt;
+&lt;!-- aMatrix[,1] --&gt;
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
+&lt;!-- .pull-right[ --&gt;
+&lt;!-- ```{r,echo=T,eval=T,tidy=FALSE} --&gt;
+&lt;!-- aMatrix[1,1] &lt;- 0 --&gt;
+&lt;!-- aMatrix[,2] &lt;- 100 --&gt;
+&lt;!-- aMatrix --&gt;
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+&lt;!-- Remember a matrix can only contain one data type (numeric, character etc). For mixed data types we use data frames. --&gt;
+
+&lt;!-- .pull-left[ --&gt;
+&lt;!-- ```{r,echo=T,eval=T,tidy=FALSE} --&gt;
+&lt;!-- aMatrix &lt;- matrix(aVector,ncol=2, --&gt;
+&lt;!--                   nrow=5,byrow = TRUE) --&gt;
+&lt;!-- aMatrix --&gt;
+
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
+&lt;!-- .pull-right[ --&gt;
+&lt;!-- ```{r,echo=T,eval=T,tidy=FALSE} --&gt;
+&lt;!-- aMatrix[1,2] &lt;- "Word" --&gt;
+&lt;!-- aMatrix --&gt;
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+&lt;!-- We can use logical operations to evaluate information our data types. --&gt;
+
+&lt;!-- ```{r,echo=T,eval=T} --&gt;
+&lt;!-- aVector &lt;- c(1,2,3,4,5,6,7,8,9,10) --&gt;
+&lt;!-- aVector &gt; 9 --&gt;
+&lt;!-- aFactor &lt;- factor(c("R","Python","R","R","Python"),levels = c("R","Python")) --&gt;
+&lt;!-- aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5),Factor=aFactor) --&gt;
+&lt;!-- aDataFrame --&gt;
+&lt;!-- aDataFrame$Factor == "R" --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+&lt;!-- We can use logical operations with indexing to subset or alter information held in our data types. --&gt;
+
+
+&lt;!-- ```{r,echo=T,eval=T} --&gt;
+&lt;!-- aVector &lt;- c(1,2,3,4,5,6,7,8,9,10) --&gt;
+&lt;!-- aVector &gt; 5 --&gt;
+&lt;!-- aVector[aVector &gt; 5] &lt;- 10 --&gt;
+&lt;!-- aVector --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+&lt;!-- When replacing factor columns in data frames we have to remember the **levels**. --&gt;
+
+&lt;!-- ```{r,echo=T,eval=T,tidy=T} --&gt;
+
+&lt;!-- aFactor &lt;- factor(c("R","Python","R","R","Python"), --&gt;
+&lt;!--                   levels = c("R","Python")) --&gt;
+&lt;!-- aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5), --&gt;
+&lt;!--                          Factor=aFactor) --&gt;
+&lt;!-- aDataFrame[aDataFrame$Factor == "R",2] &lt;- "NotPython" --&gt;
+&lt;!-- aDataFrame --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+&lt;!-- We can update levels in a data frame column as we would a factor. Now we can replace our elements in data frame. --&gt;
+
+&lt;!-- ```{r,echo=T,eval=T,tidy=FALSE} --&gt;
+
+&lt;!-- aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5), --&gt;
+&lt;!--                          Factor=aFactor) --&gt;
+&lt;!-- aDataFrame$Factor &lt;- factor(aDataFrame$Factor, --&gt;
+&lt;!--                             levels = c("R","Python","NotPython")) --&gt;
+&lt;!-- aDataFrame[aDataFrame$Factor == "R",2] &lt;- "NotPython" --&gt;
+&lt;!-- aDataFrame --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ## Recap --&gt;
+
+
+&lt;!-- Data can be read into R as a table with the **read.table()** function and written to file with the **write.table()** function. --&gt;
+
+&lt;!-- ```{r,echo=T,eval=T} --&gt;
+&lt;!-- Table &lt;- read.table("data/readThisTable.csv",sep=",",header=T,row.names=1) --&gt;
+&lt;!-- Table[1:3,] --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ```{r,echo=T,eval=F} --&gt;
+&lt;!-- write.table(Table,file="data/writeThisTable.csv", sep=",", row.names =F,col.names=T) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Recap --&gt;
+
+
+&lt;!-- If we want to know how a function works or get an example on its use we can use **?** infront function name. --&gt;
+
+&lt;!-- **?_FunctionName_** --&gt;
+
+&lt;!-- ```{r,echo=T,eval=F} --&gt;
+&lt;!-- ?merge --&gt;
+&lt;!-- ``` --&gt;
 
 ---
-#  Recap
+class: inverse, center, middle
 
-Session 1 covered introduction to R data types and import/export of data.
+# Ordering, selecting and merging
 
-- [Background to R](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#background-to-r)
-- [Data types in R](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#data_types_in_r)
-- [Reading and writing in R](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#reading-and-writing-data-in-r)
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=720px&gt;&lt;/html&gt; 
 
 ---
-## Recap
 
-R stores data in five main data types.
+## Working with your data
 
-- **Vector** - Ordered collection of single data type (numeric/character/logical).
-- **Matrix** - Table (ordered 2D collection) of single data type (numeric/character/logical).
-- **Factors** - Ordered collection of ordinal or nominal catagories.
-- **Data frame** - Table (ordered 2D array) of multiple data types of same length.
-- **List** - Ordered collection of multiple data types of differing length.
+Data analysis typically starts when you want to start performing operations on whatever input data you have. Commonly types are:
+
+* Ordering
+* Selecting
+* Merging
+
+# Lets get some input data
 
 
 ```r
-aVector &lt;- c(1,2,3,4,5,6,7,8,9,10)
-aMatrix &lt;- matrix(aVector,ncol=2,nrow=5,byrow = TRUE)
-aFactor &lt;- factor(c("R","Python","R","R","Python"),levels = c("R","Python"))
-aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5),Factor=aFactor)
+my_df &lt;- read.table("data/categoriesAndExpression.txt",sep="\t",header=T)
+head(my_df)
 ```
 
----
-## Recap
+```
+##   geneName ofInterest    pathway Expression
+## 1    Gene1   Selected Glycolysis   20.09519
+## 2    Gene2   Selected Glycolysis   23.00306
+## 3    Gene3   Selected Glycolysis   20.99712
+## 4    Gene4   Selected Glycolysis   43.01145
+## 5    Gene5   Selected Glycolysis   22.00567
+## 6    Gene6   Selected Glycolysis   20.99162
+```
 
-We can access and change information in our data.types using **indexing** with **[]**  (or **[[]]** for lists).
+## Ordering
+
+The order function can be used to reorder objects in R. The result of this function is the numerical order of the input, from smallest to largest.
 
 
 ```r
-aVector &lt;- c(1,2,3,4,5,6,7,8,9,10)
-aVector[10]
+order(my_df[,4])
 ```
 
 ```
-## [1] 10
+##   [1]  28  50  49  60  43  29  15   1  37  31  52  34   6   3   9  22  33   5
+##  [19]  54  27   8  14  59  48  36  21  30   2  42  51  45  56  39  35  24  11
+##  [37]   7  25  12  40  46  57  10  44  55  38  23  19  32   4  53  79  64  96
+##  [55]  90  73  98  65  91  80  74  97  83  85  68  77  94  62  70  87  69  17
+##  [73]  86  71  88  16  63  89  78  72  95  99  92  66  81  75  82  84  67  18
+##  [91]  93 100  61  76  20  58  41  47  26  13
 ```
+
+## Ordering
+
+We can use the result of order to index our data frame. This will reorder the dataframe based on the order. In this case we are reordeing based on lowest expression.
+
 
 ```r
-aVector[10] &lt;- 0
-aVector
+my_df_ordered &lt;- my_df[order(my_df[,4]),]
+
+head(my_df_ordered)
 ```
 
 ```
-##  [1] 1 2 3 4 5 6 7 8 9 0
+##    geneName  ofInterest    pathway Expression
+## 28   Gene28 NotSelected Glycolysis   19.94369
+## 50   Gene50 NotSelected Glycolysis   19.95572
+## 49   Gene49 NotSelected Glycolysis   19.95703
+## 60   Gene60 NotSelected Glycolysis   19.97635
+## 43   Gene43 NotSelected Glycolysis   19.98250
+## 29   Gene29 NotSelected Glycolysis   20.02165
+```
+
+## Ordering
+
+Often we want to order based on the highest value i.e. we want the highest expression genes at the top of our data frame. We can use the decreasing argument to control this.  of the time we actually 
+
+
+```r
+my_df_ordered &lt;- my_df[order(my_df[,4], decreasing = T),]
+
+head(my_df_ordered)
+```
+
+```
+##    geneName  ofInterest    pathway Expression
+## 13   Gene13    Selected Glycolysis   74.08310
+## 26   Gene26 NotSelected Glycolysis   73.98877
+## 47   Gene47 NotSelected Glycolysis   73.96610
+## 41   Gene41 NotSelected Glycolysis   73.96022
+## 58   Gene58 NotSelected Glycolysis   73.94659
+## 20   Gene20    Selected       TGFb   66.09706
+```
+
+## Subsetting
+
+Anotehr opertaion we oftenwant to do is subset our dataset based on a specific condition i.e. I want to only look at Glycolysis genes, or I only want to gene above a certain expression threshold. To do this we need to use a logical operator test to see if this if something is TRUE.
+
+Here we see which genes have an expression greater than 60.
+
+```r
+my_df_ordered$Expression &gt; 70
+```
+
+```
+##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [97] FALSE FALSE FALSE FALSE
 ```
 
 ---
-## Recap
-For matricies and data frames we use two indexes, specifying columns and rows. **matrix[_rowIndex_,_columnIndex_]**
+## Logical operators
+
+Operators that we commonly use are:
+
+- **==**  evaluates as equal.
+- **&gt;** and **&lt;** evaluates as greater or less than respectively.
+- **&gt;=** and **&lt;=** evaluates as greater than or equal or less than or equal respectively.
+
+
+---
+## Logical and indexing
+
+The result of these expressions is a logical vector of TRUE/FALSE values. These vectors can be used to index, just like numerical vectors. TRUE values are returned.
+
+
+```r
+idx &lt;- my_df_ordered$Expression &gt; 70
+my_df_ordered[idx,]
+```
+
+```
+##    geneName  ofInterest    pathway Expression
+## 13   Gene13    Selected Glycolysis   74.08310
+## 26   Gene26 NotSelected Glycolysis   73.98877
+## 47   Gene47 NotSelected Glycolysis   73.96610
+## 41   Gene41 NotSelected Glycolysis   73.96022
+## 58   Gene58 NotSelected Glycolysis   73.94659
+```
+
+---
+
+## Combining logical vectors
+
+Logical vectors can be used in combination in order to index vectors. To combine logical vectors we can use some common R operators.
+
+- **&amp;** - Requires both logical operators to be TRUE
+- **|** - Requires either logical operator to be TRUE.
+- **!** - Reverses the logical operator, so TRUE is FALSE and FALSE is TRUE.
+
+
+```r
+my_df_ordered[my_df_ordered$Expression &gt; 60 &amp; my_df_ordered$pathway == "TGFb",]
+```
+
+```
+##     geneName  ofInterest pathway Expression
+## 20    Gene20    Selected    TGFb   66.09706
+## 76    Gene76 NotSelected    TGFb   63.08147
+## 61    Gene61 NotSelected    TGFb   63.04337
+## 100  Gene100 NotSelected    TGFb   62.93485
+## 93    Gene93 NotSelected    TGFb   62.93153
+```
+
+
+---
+## The %in% operator
+
+A common task in R is to subset one vector by the values in another vector.
+
+The **%in%** operator in the context **A %in% B** creates a logical vector of whether values in **A** matches any values in of **B**.
+
+
+```r
+my_favorite_genes &lt;- c("Gene1","Gene10","Gene15")
+logical_index &lt;- my_df$geneName %in% my_favorite_genes
+logical_index
+```
+
+```
+##   [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+##  [13] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [97] FALSE FALSE FALSE FALSE
+```
+
+---
+## The %in% operator
+
+This can be then used to subset the values within one character vector by a those in a second.
+
+```r
+my_df[logical_index,]
+```
+
+```
+##    geneName ofInterest    pathway Expression
+## 1     Gene1   Selected Glycolysis   20.09519
+## 10   Gene10   Selected Glycolysis   34.91377
+## 15   Gene15   Selected Glycolysis   20.06247
+```
+
+
+
+
+## Merging
+
+A common operation is to join two data frames by a column of common values.
+
 
 .pull-left[
 
+
 ```r
-aMatrix &lt;- matrix(aVector,ncol=2,
-                  nrow=5,byrow = TRUE)
-aMatrix
+my_df2 &lt;- read.table("data/gene_lengths.txt",sep="\t",header=T)
+
+nrow(my_df2)
 ```
 
 ```
-##      [,1] [,2]
-## [1,]    1    2
-## [2,]    3    4
-## [3,]    5    6
-## [4,]    7    8
-## [5,]    9    0
+## [1] 15
 ```
 
 ```r
-aMatrix[1,]
+head(my_df2)
 ```
 
 ```
-## [1] 1 2
-```
-
-```r
-aMatrix[,1]
-```
-
-```
-## [1] 1 3 5 7 9
+##    Gene Length
+## 1 Gene1   1788
+## 2 Gene3    213
+## 3 Gene5    529
+## 4 Gene7    234
+## 5 Gene8   1638
+## 6 Gene9    917
 ```
   ]
+
 .pull-right[
 
 ```r
-aMatrix[1,1] &lt;- 0
-aMatrix[,2] &lt;- 100
-aMatrix
+nrow(my_df)
 ```
 
 ```
-##      [,1] [,2]
-## [1,]    0  100
-## [2,]    3  100
-## [3,]    5  100
-## [4,]    7  100
-## [5,]    9  100
+## [1] 100
 ```
   ]
 
 ---
-## Recap
+## Merging data frames
 
-Remember a matrix can only contain one data type (numeric, character etc). For mixed data types we use data frames.
-
-.pull-left[
-
-```r
-aMatrix &lt;- matrix(aVector,ncol=2,
-                  nrow=5,byrow = TRUE)
-aMatrix
-```
-
-```
-##      [,1] [,2]
-## [1,]    1    2
-## [2,]    3    4
-## [3,]    5    6
-## [4,]    7    8
-## [5,]    9    0
-```
-  ]
-.pull-right[
-
-```r
-aMatrix[1,2] &lt;- "Word"
-aMatrix
-```
-
-```
-##      [,1] [,2]  
-## [1,] "1"  "Word"
-## [2,] "3"  "4"   
-## [3,] "5"  "6"   
-## [4,] "7"  "8"   
-## [5,] "9"  "0"
-```
-  ]
-
----
-## Recap
-
-We can use logical operations to evaluate information our data types.
-
-
-```r
-aVector &lt;- c(1,2,3,4,5,6,7,8,9,10)
-aVector &gt; 9
-```
-
-```
-##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-```
-
-```r
-aFactor &lt;- factor(c("R","Python","R","R","Python"),levels = c("R","Python"))
-aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5),Factor=aFactor)
-aDataFrame
-```
-
-```
-##   Number Factor
-## 1      1      R
-## 2      2 Python
-## 3      3      R
-## 4      4      R
-## 5      5 Python
-```
-
-```r
-aDataFrame$Factor == "R"
-```
-
-```
-## [1]  TRUE FALSE  TRUE  TRUE FALSE
-```
-
----
-## Recap
-
-We can use logical operations with indexing to subset or alter information held in our data types.
+To do this we can use the **merge()** function with the data frames as the first two arguments. We can then specify the columns to merge by with the **by** argument. To keep only data pertaining to values common to both data frames the **all** argument is set to FALSE.
 
 
 
 ```r
-aVector &lt;- c(1,2,3,4,5,6,7,8,9,10)
-aVector &gt; 5
+merge_df &lt;- merge(my_df, my_df2, by.x="geneName","Gene", all=FALSE)
+merge_df
 ```
 
 ```
-##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+##    geneName ofInterest    pathway Expression Length
+## 1     Gene1   Selected Glycolysis   20.09519   1788
+## 2    Gene10   Selected Glycolysis   34.91377   1882
+## 3    Gene12   Selected Glycolysis   27.01314    501
+## 4    Gene13   Selected Glycolysis   74.08310   1045
+## 5    Gene15   Selected Glycolysis   20.06247   1869
+## 6    Gene16   Selected       TGFb   56.03506    851
+## 7    Gene17   Selected       TGFb   54.00140   1807
+## 8    Gene18   Selected       TGFb   59.04783    600
+## 9    Gene19   Selected       TGFb   42.91023   1889
+## 10   Gene20   Selected       TGFb   66.09706    992
+## 11    Gene3   Selected Glycolysis   20.99712    213
+## 12    Gene5   Selected Glycolysis   22.00567    529
+## 13    Gene7   Selected Glycolysis   26.07826    234
+## 14    Gene8   Selected Glycolysis   22.92961   1638
+## 15    Gene9   Selected Glycolysis   21.02250    917
 ```
 
-```r
-aVector[aVector &gt; 5] &lt;- 10
-aVector
-```
+&lt;!-- --- --&gt;
+&lt;!-- ## Combining logical vectors --&gt;
 
-```
-##  [1]  1  2  3  4  5 10 10 10 10 10
-```
+&lt;!-- Logical vectors can be used in combination in order to index vectors. To combine logical vectors we can use some common R operators. --&gt;
 
----
-## Recap
+&lt;!-- - **&amp;** - Requires both logical operators to be TRUE --&gt;
+&lt;!-- - **|** - Requires either logical operator to be TRUE. --&gt;
+&lt;!-- - **!** - Reverses the logical operator, so TRUE is FALSE and FALSE is TRUE. --&gt;
 
-When replacing factor columns in data frames we have to remember the **levels**.
-
-
-```r
-aFactor &lt;- factor(c("R","Python","R","R","Python"),
-                  levels = c("R","Python"))
-aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5),
-                         Factor=aFactor)
-aDataFrame[aDataFrame$Factor == "R",2] &lt;- "NotPython"
-```
-
-```
-## Warning in `[&lt;-.factor`(`*tmp*`, iseq, value = c("NotPython", "NotPython", :
-## invalid factor level, NA generated
-```
-
-```r
-aDataFrame
-```
-
-```
-##   Number Factor
-## 1      1   &lt;NA&gt;
-## 2      2 Python
-## 3      3   &lt;NA&gt;
-## 4      4   &lt;NA&gt;
-## 5      5 Python
-```
+&lt;!-- ```{r vectorLogicalCombine_introtoR} --&gt;
+&lt;!-- x &lt;- 1:10 --&gt;
+&lt;!-- !x &gt; 4 --&gt;
+&lt;!-- x &gt; 4 &amp; x &lt; 7 --&gt;
+&lt;!-- x &gt; 4 | x &lt; 7 --&gt;
+&lt;!-- ``` --&gt;
 
 
----
-## Recap
+&lt;!-- --- --&gt;
+&lt;!-- ## Combining logical vectors --&gt;
 
-We can update levels in a data frame column as we would a factor. Now we can replace our elements in data frame.
-
-
-```r
-aDataFrame &lt;- data.frame(Number=c(1,2,3,4,5),
-                         Factor=aFactor)
-aDataFrame$Factor &lt;- factor(aDataFrame$Factor,
-                            levels = c("R","Python","NotPython"))
-aDataFrame[aDataFrame$Factor == "R",2] &lt;- "NotPython"
-aDataFrame
-```
-
-```
-##   Number    Factor
-## 1      1 NotPython
-## 2      2    Python
-## 3      3 NotPython
-## 4      4 NotPython
-## 5      5    Python
-```
-
----
-
-## Recap
+&lt;!-- Such combinations can allow for complex selection of a vector's values. --&gt;
+&lt;!-- ```{r vectorLogicalCombineIndex_introtoR} --&gt;
+&lt;!-- x &lt;- 1:10 --&gt;
+&lt;!-- x --&gt;
+&lt;!-- x[x &gt; 4 &amp; x &lt; 7] --&gt;
+&lt;!-- x[x &gt; 4 &amp; !x &lt; 7] --&gt;
+&lt;!-- ``` --&gt;
 
 
-Data can be read into R as a table with the **read.table()** function and written to file with the **write.table()** function.
 
 
-```r
-Table &lt;- read.table("data/readThisTable.csv",sep=",",header=T,row.names=1)
-Table[1:3,]
-```
-
-```
-##        Sample_1.hi Sample_2.hi Sample_3.hi Sample_4.low Sample_5.low
-## Gene_a    4.570237    3.230467    3.351827     3.930877     4.098247
-## Gene_b    3.561733    3.632285    3.587523     4.185287     1.380976
-## Gene_c    3.797274    2.874462    4.016916     4.175772     1.988263
-##        Sample_1.low
-## Gene_a     4.418726
-## Gene_b     5.936990
-## Gene_c     3.780917
-```
-
-```r
-write.table(Table,file="data/writeThisTable.csv", sep=",", row.names =F,col.names=T)
-```
-
-
----
-## Recap
-
-
-If we want to know how a function works or get an example on its use we can use **?** infront function name.
-
-**?_FunctionName_**
-
-
-```r
-?merge
-```
 
 ---
 class: inverse, center, middle
@@ -370,13 +558,13 @@ x[x &lt; 4]
 Logicals are also used in controlling how scripted procedures execute.
 
 
----
-## Conditions and Loops
+&lt;!-- --- --&gt;
+&lt;!-- ## Conditions and Loops --&gt;
 
-* &lt;span style="color:red"&gt;Conditional branching (if,else)&lt;/span&gt;
-* &lt;span style="color:green"&gt;Loops (for, while)&lt;/span&gt;
+&lt;!-- * &lt;span style="color:red"&gt;Conditional branching (if,else)&lt;/span&gt; --&gt;
+&lt;!-- * &lt;span style="color:green"&gt;Loops (for, while)&lt;/span&gt; --&gt;
 
-&lt;span style="color:green"&gt;While&lt;/span&gt; I'm analysing data, &lt;span style="color:red"&gt;if&lt;/span&gt; I need to execute complex statistical procedures on the data I will use R &lt;span style="color:red"&gt;else&lt;/span&gt; I will use a calculator.
+&lt;!-- &lt;span style="color:green"&gt;While&lt;/span&gt; I'm analysing data, &lt;span style="color:red"&gt;if&lt;/span&gt; I need to execute complex statistical procedures on the data I will use R &lt;span style="color:red"&gt;else&lt;/span&gt; I will use a calculator. --&gt;
 
 ---
 ## Conditional branching
@@ -386,29 +574,22 @@ Conditional branching is the evaluation of a logical to determine whether a chun
 
 In R, we use the **if** statement with the logical to be evaluated in **()** and dependent code to be executed in **{}**.
 
-
-```r
-x &lt;- TRUE
-if(x){
-  message("x is true")
-}
-```
-
-```
-## x is true
-```
-
-```r
-x &lt;- FALSE
-if(x){
-  message("x is true")
-}
-```
-
----
-## Evaluating with if()
-
-More often, we construct the logical value within **()** itself. This can be termed the **condition**. 
+&lt;!-- # ```{r,message=T} --&gt;
+&lt;!-- # x &lt;- TRUE --&gt;
+&lt;!-- # if(x){ --&gt;
+&lt;!-- #   message("x is true") --&gt;
+&lt;!-- # } --&gt;
+&lt;!-- # x &lt;- FALSE --&gt;
+&lt;!-- # if(x){ --&gt;
+&lt;!-- #   message("x is true") --&gt;
+&lt;!-- # } --&gt;
+&lt;!-- #  --&gt;
+&lt;!-- # ``` --&gt;
+&lt;!-- #  --&gt;
+&lt;!-- # --- --&gt;
+&lt;!-- # ## Evaluating with if() --&gt;
+&lt;!-- #  --&gt;
+&lt;!-- # More often, we construct the logical value within **()** itself. This can be termed the **condition**.  --&gt;
 
 
 ```r
@@ -434,7 +615,7 @@ if(x &gt; y){
 ```
 x is now no longer greater than y, so no message is printed.
 
-We really still want a message telling us what was the result of the condition.
+It would be better if all outcomes have a message. So we want a message telling us what was the result of the condition.
 
 ---
 ## else following an if
@@ -547,34 +728,18 @@ The two main generic methods of looping in R are **while** and **for**
 
 - **for** - *for* loops repeat the execution of code for a range of specified values.
 
----
-## While loops
+&lt;!-- --- --&gt;
+&lt;!-- ## While loops --&gt;
 
-While loops are most useful if you know the condition will be satisified but are not sure when (i.e. Looking for a point when a number first occurs in a list).
-
-```r
-x &lt;- 1
-while(x &lt; 3){
-  message("x is ",x," ")
-  x &lt;- x+1
-}
-```
-
-```
-## x is 1
-```
-
-```
-## x is 2
-```
-
-```r
-message("Finally x is not less than 3")
-```
-
-```
-## Finally x is not less than 3
-```
+&lt;!-- While loops are most useful if you know the condition will be satisified but are not sure when (i.e. Looking for a point when a number first occurs in a list). --&gt;
+&lt;!-- ```{r, message=TRUE} --&gt;
+&lt;!-- x &lt;- 1 --&gt;
+&lt;!-- while(x &lt; 3){ --&gt;
+&lt;!--   message("x is ",x," ") --&gt;
+&lt;!--   x &lt;- x+1 --&gt;
+&lt;!-- } --&gt;
+&lt;!-- message("Finally x is not less than 3") --&gt;
+&lt;!-- ``` --&gt;
 
 ---
 ## For loops
@@ -717,71 +882,47 @@ for(i in 1:13){
 ```
   ]
 
----
-## Breaking loops
+&lt;!-- --- --&gt;
+&lt;!-- ## Breaking loops --&gt;
 
-We can use conditionals to exit a loop if a condition is satisfied, just like a while loop.
+&lt;!-- We can use conditionals to exit a loop if a condition is satisfied, just like a while loop. --&gt;
 
-.pull-left[
+&lt;!-- .pull-left[ --&gt;
+&lt;!-- ```{r,message=T,eval=F} --&gt;
+&lt;!-- x &lt;- 1:13 --&gt;
 
-```r
-x &lt;- 1:13
+&lt;!-- for(i in 1:13){ --&gt;
+&lt;!--   if(i &lt; 10){ --&gt;
+&lt;!--     message("Number ",i," is less than 10") --&gt;
+&lt;!--   }else if(i == 10){ --&gt;
+&lt;!--     message("Number ",i," is  10") --&gt;
+&lt;!--     break --&gt;
+&lt;!--   }else{ --&gt;
+&lt;!--     message("Number ",i," is greater than  10")  --&gt;
+&lt;!--   } --&gt;
+&lt;!-- } --&gt;
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
 
-for(i in 1:13){
-  if(i &lt; 10){
-    message("Number ",i," is less than 10")
-  }else if(i == 10){
-    message("Number ",i," is  10")
-    break
-  }else{
-    message("Number ",i," is greater than  10") 
-  }
-}
-```
-  ]
+&lt;!-- .pull-right[ --&gt;
+&lt;!-- ```{r,message=T,eval=T,echo=F} --&gt;
+&lt;!-- x &lt;- 1:13 --&gt;
 
-.pull-right[
-
-```
-## Number 1 is less than 10
-```
-
-```
-## Number 2 is less than 10
-```
-
-```
-## Number 3 is less than 10
-```
-
-```
-## Number 4 is less than 10
-```
-
-```
-## Number 5 is less than 10
-```
-
-```
-## Number 6 is less than 10
-```
-
-```
-## Number 7 is less than 10
-```
-
-```
-## Number 8 is less than 10
-```
-
-```
-## Number 9 is less than 10
-```
-
-```
-## Number 10 is  10
-```
-  ]
+&lt;!-- for(i in 1:13){ --&gt;
+&lt;!--   if(i &lt; 10){ --&gt;
+&lt;!--     message("Number ",i, --&gt;
+&lt;!--             " is less than 10") --&gt;
+&lt;!--   }else if(i == 10){ --&gt;
+&lt;!--     message("Number ",i, --&gt;
+&lt;!--             " is  10") --&gt;
+&lt;!--     break --&gt;
+&lt;!--   }else{ --&gt;
+&lt;!--     message("Number ",i, --&gt;
+&lt;!--             " is greater than  10")  --&gt;
+&lt;!--   } --&gt;
+&lt;!-- } --&gt;
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
 
 ---
 ## Functions to loop over data types
@@ -794,108 +935,66 @@ There are functions which allow you to loop over a data type and apply a functio
 
 - **sapply** - Apply function to every element of a vector or list and return results as a vector,matrix or list.
 
----
-## Looping - apply()
+&lt;!-- --- --&gt;
+&lt;!-- ## Looping - apply() --&gt;
 
-The **apply()** function applys a function to the rows or columns of a matrix. The arguments **FUN** specifies the function to apply and **MARGIN** whether to apply the functions by rows/columns or both.
+&lt;!-- The **apply()** function applys a function to the rows or columns of a matrix. The arguments **FUN** specifies the function to apply and **MARGIN** whether to apply the functions by rows/columns or both. --&gt;
 
-```
-apply(DATA,MARGIN,FUN,...)
-```
+&lt;!-- ``` --&gt;
+&lt;!-- apply(DATA,MARGIN,FUN,...) --&gt;
+&lt;!-- ``` --&gt;
 
-- **DATA** - A matrix (or something to be coerced into a matrix)
-- **MARGIN** - 1 for rows, 2 for columns, c(1,2) for cells
+&lt;!-- - **DATA** - A matrix (or something to be coerced into a matrix) --&gt;
+&lt;!-- - **MARGIN** - 1 for rows, 2 for columns, c(1,2) for cells --&gt;
 
----
-## apply() example
+&lt;!-- --- --&gt;
+&lt;!-- ## apply() example --&gt;
 
+&lt;!-- ```{r} --&gt;
+&lt;!-- matExample &lt;- matrix(c(1:4),nrow=2,ncol=2,byrow=T) --&gt;
+&lt;!-- matExample --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Get the mean of rows --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- apply(matExample,1,mean) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Get the mean of columns --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- apply(matExample,2,mean) --&gt;
+&lt;!-- ``` --&gt;
 
-```r
-matExample &lt;- matrix(c(1:4),nrow=2,ncol=2,byrow=T)
-matExample
-```
+&lt;!-- --- --&gt;
+&lt;!-- ## Additional arguments to apply --&gt;
 
-```
-##      [,1] [,2]
-## [1,]    1    2
-## [2,]    3    4
-```
-Get the mean of rows
+&lt;!-- Additional arguments to be used by the function in the apply loop can be specified after the function argument.  --&gt;
 
-```r
-apply(matExample,1,mean)
-```
-
-```
-## [1] 1.5 3.5
-```
-Get the mean of columns
-
-```r
-apply(matExample,2,mean)
-```
-
-```
-## [1] 2 3
-```
-
----
-## Additional arguments to apply
-
-Additional arguments to be used by the function in the apply loop can be specified after the function argument. 
-
-Arguments may be ordered as if passed to function directly. For **paste()** function however this isn't possible.
+&lt;!-- Arguments may be ordered as if passed to function directly. For **paste()** function however this isn't possible. --&gt;
 
 
+&lt;!-- ```{r} --&gt;
+&lt;!-- apply(matExample,1,paste,collapse=";") --&gt;
+&lt;!-- ``` --&gt;
 
-```r
-apply(matExample,1,paste,collapse=";")
-```
+&lt;!-- --- --&gt;
+&lt;!-- ## lapply() --&gt;
 
-```
-## [1] "1;2" "3;4"
-```
+&lt;!-- .pull-left[ --&gt;
+&lt;!-- Similar to apply, **lapply** applies a function to every element of a vector or list.  --&gt;
 
----
-## lapply()
+&lt;!-- **lapply** returns a list object containing the results of evaluating the function. --&gt;
 
-.pull-left[
-Similar to apply, **lapply** applies a function to every element of a vector or list. 
+&lt;!-- ```{r} --&gt;
+&lt;!-- lapply(c(1,2),mean) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
+&lt;!-- .pull-right[ --&gt;
+&lt;!-- As with apply() additional arguments can be supplied after the function name argument. --&gt;
 
-**lapply** returns a list object containing the results of evaluating the function.
+&lt;!-- ```{r} --&gt;
+&lt;!-- lapply(list(1,c(NA,1),2),mean, na.rm=T) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!--   ] --&gt;
 
-
-```r
-lapply(c(1,2),mean)
-```
-
-```
-## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] 2
-```
-  ]
-.pull-right[
-As with apply() additional arguments can be supplied after the function name argument.
-
-
-```r
-lapply(list(1,c(NA,1),2),mean, na.rm=T)
-```
-
-```
-## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] 1
-## 
-## [[3]]
-## [1] 2
-```
-  ]
 ---
 ## sapply()
 
@@ -1018,553 +1117,541 @@ sapply(exampleList, summary)
 ##    1.00    2.50    3.50    3.25    4.25    5.00
 ```
 
----
-## Time for an exercise!
+&lt;!-- --- --&gt;
+&lt;!-- ## Time for an exercise! --&gt;
 
 
-Exercise on loops and conditional branching can be found [here](../..//exercises/exercises/conditionsAndLoops_exercise.html)
+&lt;!-- Exercise on loops and conditional branching can be found [here](../..//exercises/exercises/conditionsAndLoops_exercise.html) --&gt;
 
----
-## Answers to exercise
-
-
-Answers can be found here  [here](../..//exercises/answers/conditionsAndLoops_answers.html)
+&lt;!-- --- --&gt;
+&lt;!-- ## Answers to exercise --&gt;
 
 
----
+&lt;!-- Answers can be found here  [here](../..//exercises/answers/conditionsAndLoops_answers.html) --&gt;
+
+
+&lt;!-- --- --&gt;
 
 class: inverse, center, middle
 
-# Custom functions
+# Plotting
 
-&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=720px&gt;&lt;/html&gt; 
-
----
-
-
-## Custom functions
-You can create your own functions easily in R using the **&lt;-** assignment and **function** statement.  
-We put all our input arguments in **()** and all code to be executed in **{}**.  
-Anything to be received back from the function is indicated by the **return** statement.  
-
-In this case we can recapitulate the square function. 
-
-```r
-myFirstFunction  &lt;- function(MYARGUMENT){
-  ...................
-  ..CODE_TO_EXECUTE..
-  ...................
-  return(MYRESULT)
-}
-
-myFirstFunction(MYARGUMENT=MY_USER_SUPPLIED_ARGUMENT)
-```
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=720px&gt;&lt;/html&gt;
 
 ---
-## Custom functions
 
-First lets create a function that can sum two numbers. We can call the function **myFirstFunction** and set our arguments as **num1** and **num2**.
+
+## Base plotting
+
+Base plotting function *plot* does a good job at estimating what kind of plot you might want. The output varies depending on what type of data type is your input. 
+
+
+```r
+plot(merge_df[,c(4,5)])
+```
+
+![](introToR_Session2_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+
+## Base plotting
+
+Many plots types like factors. This helps the plotting deal with dividing your data into categories.
+
+
+```r
+plot(merge_df[,3])
+```
+
+
+```
+## Warning in xy.coords(x, y, xlabel, ylabel, log): NAs introduced by coercion
+```
+
+```
+## Warning in min(x): no non-missing arguments to min; returning Inf
+```
+
+```
+## Warning in max(x): no non-missing arguments to max; returning -Inf
+```
+
+![](introToR_Session2_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+
+```
+## Error in plot.window(...) : need finite 'ylim' values
+```
+
+```
+## [1] 1
+```
 
 
 
 ```r
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2
-  return(sumNum)
-}
-
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-
-myResult
+merge_df[,3] &lt;- factor(merge_df[,3])
+plot(merge_df[,3])
 ```
 
-```
-## [1] 5
-```
+![](introToR_Session2_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
 
----
-## Returning multiple values
+## Base plotting
 
-We can only **return** 1 object at a time from function. Here we create the multiple of our numbers and try and return alongside our sum.
-
+There are also some functions for making specific plots, like boxplot.
 
 
 ```r
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2
-  multipleNum &lt;- num1*num2
-  return(sumNum,multipleNum)
-}
-
-myResult &lt;- myFirstFunction(num1=2,num2=3)
+boxplot(Expression ~ pathway, merge_df)
 ```
 
-```
-## Error in return(sumNum, multipleNum): multi-argument returns are not permitted
-```
+![](introToR_Session2_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
 
----
-## Returning multiple values
+## Beyond Base plots
+For more advance plots we recommend you check out our ggplot2 training. [R graph gallery](https://r-graph-gallery.com/index.html) is also a really useful website that has example plots and the code used to generate them. 
 
-A simple solution is to pass back an object that contains both results. Here we create a named vector to return our multiple and sum.
-
-
-
-```r
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2
-  multipleNum &lt;- num1*num2
-  VectorOfResults &lt;- c(sumNum,multipleNum)
-  names(VectorOfResults) &lt;- c("multiple","sum")
-  return(VectorOfResults)
-}
-
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-myResult
-```
-
-```
-## multiple      sum 
-##        5        6
-```
-
----
-## Returning multiple values
-
-Lists are very useful here as they can contain different object classes in their elements and so we can return mixed data types from our functions using this. Below we return a list with elements of the input arguments as a vector and the result as a data.frame.
-
-
-
-```r
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2
-  multipleNum &lt;- num1*num2
-  InputNumbers &lt;- c(FirstNum=num1,SecondNum=num2)
-  DF &lt;- data.frame(Sum=sumNum,Multiple=multipleNum)
-  listToReturn &lt;- list(Input=InputNumbers,Result=DF)
-  return(listToReturn)
-}
-
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-myResult
-```
-
-```
-## $Input
-##  FirstNum SecondNum 
-##         2         3 
-## 
-## $Result
-##   Sum Multiple
-## 1   5        6
-```
-
----
-## Evaluate until return
-
-In a function containing a **return** statement, the code up until the return statement is evaluated and anything after the return statement is not evaluated.
-
-
-
-```r
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2
-  multipleNum &lt;- num1*num2
-  InputNumbers &lt;- c(FirstNum=num1,SecondNum=num2)
-  DF &lt;- data.frame(Sum=sumNum,Multiple=multipleNum)
-  listToReturn &lt;- list(Input=InputNumbers,Result=DF)
-  message("Before return")
-  return(listToReturn)
-  message("After return")
-}
-
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-```
-
-```
-## Before return
-```
-
-```r
-myResult
-```
-
-```
-## $Input
-##  FirstNum SecondNum 
-##         2         3 
-## 
-## $Result
-##   Sum Multiple
-## 1   5        6
-```
-
----
-## No return statement
-
-If a function does not contain a return statement, the result of the last line in function is returned.
-
-
-
-```r
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2
-  multipleNum &lt;- num1*num2
-  InputNumbers &lt;- c(FirstNum=num1,SecondNum=num2)
-  DF &lt;- data.frame(Sum=sumNum,Multiple=multipleNum)
-  listToReturn &lt;- list(Input=InputNumbers,Result=DF)
-  listToReturn
-}
-
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-myResult
-```
-
-```
-## $Input
-##  FirstNum SecondNum 
-##         2         3 
-## 
-## $Result
-##   Sum Multiple
-## 1   5        6
-```
-
----
-## Variable scope in functions
-
-Variables defined in the arguments or within the function exist only within the environment of the function.
-
-
-```r
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2
-  return(sumNum)
-}
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-myResult
-```
-
-```
-## [1] 5
-```
-
-```r
-sumNum
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'sumNum' not found
-```
-
----
-## Variable scope in functions
-
-Variables defined in the global environment outside the function are available within the function.
-
-
-```r
-my3rdNumber &lt;- 4
-myFirstFunction  &lt;- function(num1,num2){
-  sumNum &lt;- num1+num2+my3rdNumber
-  return(sumNum)
-}
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-myResult
-```
-
-```
-## [1] 9
-```
-
-
----
-##  Variable scope in functions
-
-Changes to variables defined in the global environment from within the function will not be reflected in the global environment.
-
-
-```r
-my3rdNumber &lt;- 4
-myFirstFunction  &lt;- function(num1,num2){
-  my3rdNumber &lt;- num1+num2+my3rdNumber
-  return(my3rdNumber)
-}
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-myResult
-```
-
-```
-## [1] 9
-```
-
-```r
-my3rdNumber
-```
-
-```
-## [1] 4
-```
-
----
-##  Variable scope in functions
-
-We can use a **&lt;&lt;-** to assign to the environment outside the function although we will rarely do this
-
-
-```r
-my3rdNumber &lt;- 4
-myFirstFunction  &lt;- function(num1,num2){
-  my3rdNumber &lt;&lt;- num1+num2+my3rdNumber
-  return(my3rdNumber)
-}
-myResult &lt;- myFirstFunction(num1=2,num2=3)
-myResult
-```
-
-```
-## [1] 9
-```
-
-```r
-my3rdNumber
-```
-
-```
-## [1] 9
-```
-
----
-## Argument defaults
-
-Functions can have defaults for their arguments which will be used when arguments are not specified.
-
-
-```r
-myFirstFunction  &lt;- function(num1=1,num2=3){
-  my3rdNumber &lt;- num1+num2+my3rdNumber
-  return(my3rdNumber)
-}
-myFirstFunction()
-```
-
-```
-## [1] 13
-```
-
-```r
-myFirstFunction(3,4)
-```
-
-```
-## [1] 16
-```
-
-
----
-## Custom function example
-User defined functions can be as long and complicated as you want, taking in many variables, printing out messages and utilizing other functions within them.
-
-Lets make z-scores:
-
-```r
-my_zscore  &lt;- function(my_number, my_vector){
-  my_mean &lt;- mean(my_vector)
-  message("Mean is ", my_mean)
-  diff_from_mean &lt;- my_number-my_mean
-  stdev &lt;- sd(my_vector)
-  my_z &lt;- diff_from_mean/stdev
-  return(my_z)
-}
-
-A &lt;- rnorm(20)
-
-my_zscore(my_number=A[1], my_vector=A)
-```
-
-```
-## Mean is 0.290551949290036
-```
-
-```
-## [1] -0.4466291
-```
-
----
-## Debugging functions
-
-In Rstudio, if we want to see what may be happening within our function we can use **debug** function with our function of interest's name. We can stop debugging with the **undebug** function.
-
-
-```r
-debug(myFirstFunction)
-undebug(myFirstFunction)
-```
-
----
-## Custom functions and apply
-
-These custom functions can also be utilized with apply. 
-
-
-```r
-sapply(A, my_zscore, my_vector=A)
-```
-
-```
-##  [1] -0.4466291  1.8349212  0.2935585 -0.5377074  0.4365208  1.4010397
-##  [7]  0.3640984  0.1074542 -1.9522542 -1.0661325  0.7347903  0.7422989
-## [13]  0.3919661 -1.1863846  0.7793160 -1.1099035  0.1063682  1.1170540
-## [19] -1.1493276 -0.8610472
-```
-
-
----
-class: inverse, center, middle
-
-# Getting Additional Libraries
-
-&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=720px&gt;&lt;/html&gt; 
-
----
-
-
-## Loading libraries
-
-Libraries can be loaded using the library() function with an argument of the name of the library.
-
+.pull-left[
 
 ```r
 library(ggplot2)
+
+ggplot(merge_df, aes(x=pathway, y=Expression, fill=pathway))+
+  geom_violin()+
+  geom_jitter(width=0.1)+
+  theme_linedraw()+
+  ggtitle("Gene Expression in Glycolyis and TGFb pathways")
 ```
+  ]
+  
+.pull-right[
+![](introToR_Session2_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+  ]
 
-You can see what libraries are available in the Packages panel or by the library() function with no arguments supplied.
 
 
-```r
-library()
-```
+
+&lt;!-- ## Custom functions --&gt;
+&lt;!-- You can create your own functions easily in R using the **&lt;-** assignment and **function** statement.   --&gt;
+&lt;!-- We put all our input arguments in **()** and all code to be executed in **{}**.   --&gt;
+&lt;!-- Anything to be received back from the function is indicated by the **return** statement.   --&gt;
+
+&lt;!-- In this case we can recapitulate the square function.  --&gt;
+&lt;!-- ```{r makingfunctions,eval=FALSE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(MYARGUMENT){ --&gt;
+&lt;!--   ................... --&gt;
+&lt;!--   ..CODE_TO_EXECUTE.. --&gt;
+&lt;!--   ................... --&gt;
+&lt;!--   return(MYRESULT) --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- myFirstFunction(MYARGUMENT=MY_USER_SUPPLIED_ARGUMENT) --&gt;
+
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Custom functions --&gt;
+
+&lt;!-- First lets create a function that can sum two numbers. We can call the function **myFirstFunction** and set our arguments as **num1** and **num2**. --&gt;
+
+
+&lt;!-- ```{r makingfunctionsb} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2 --&gt;
+&lt;!--   return(sumNum) --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+
+&lt;!-- myResult --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Returning multiple values --&gt;
+
+&lt;!-- We can only **return** 1 object at a time from function. Here we create the multiple of our numbers and try and return alongside our sum. --&gt;
+
+
+&lt;!-- ```{r makingfunctionsc,error=TRUE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2 --&gt;
+&lt;!--   multipleNum &lt;- num1*num2 --&gt;
+&lt;!--   return(sumNum,multipleNum) --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Returning multiple values --&gt;
+
+&lt;!-- A simple solution is to pass back an object that contains both results. Here we create a named vector to return our multiple and sum. --&gt;
+
+
+&lt;!-- ```{r makingfunctionsd,error=FALSE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2 --&gt;
+&lt;!--   multipleNum &lt;- num1*num2 --&gt;
+&lt;!--   VectorOfResults &lt;- c(sumNum,multipleNum) --&gt;
+&lt;!--   names(VectorOfResults) &lt;- c("multiple","sum") --&gt;
+&lt;!--   return(VectorOfResults) --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Returning multiple values --&gt;
+
+&lt;!-- Lists are very useful here as they can contain different object classes in their elements and so we can return mixed data types from our functions using this. Below we return a list with elements of the input arguments as a vector and the result as a data.frame. --&gt;
+
+
+&lt;!-- ```{r makingfunctionse,error=FALSE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2 --&gt;
+&lt;!--   multipleNum &lt;- num1*num2 --&gt;
+&lt;!--   InputNumbers &lt;- c(FirstNum=num1,SecondNum=num2) --&gt;
+&lt;!--   DF &lt;- data.frame(Sum=sumNum,Multiple=multipleNum) --&gt;
+&lt;!--   listToReturn &lt;- list(Input=InputNumbers,Result=DF) --&gt;
+&lt;!--   return(listToReturn) --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Evaluate until return --&gt;
+
+&lt;!-- In a function containing a **return** statement, the code up until the return statement is evaluated and anything after the return statement is not evaluated. --&gt;
+
+
+&lt;!-- ```{r makingfunctionsf,error=FALSE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2 --&gt;
+&lt;!--   multipleNum &lt;- num1*num2 --&gt;
+&lt;!--   InputNumbers &lt;- c(FirstNum=num1,SecondNum=num2) --&gt;
+&lt;!--   DF &lt;- data.frame(Sum=sumNum,Multiple=multipleNum) --&gt;
+&lt;!--   listToReturn &lt;- list(Input=InputNumbers,Result=DF) --&gt;
+&lt;!--   message("Before return") --&gt;
+&lt;!--   return(listToReturn) --&gt;
+&lt;!--   message("After return") --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## No return statement --&gt;
+
+&lt;!-- If a function does not contain a return statement, the result of the last line in function is returned. --&gt;
+
+
+&lt;!-- ```{r makingfunctionsg,error=FALSE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2 --&gt;
+&lt;!--   multipleNum &lt;- num1*num2 --&gt;
+&lt;!--   InputNumbers &lt;- c(FirstNum=num1,SecondNum=num2) --&gt;
+&lt;!--   DF &lt;- data.frame(Sum=sumNum,Multiple=multipleNum) --&gt;
+&lt;!--   listToReturn &lt;- list(Input=InputNumbers,Result=DF) --&gt;
+&lt;!--   listToReturn --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Variable scope in functions --&gt;
+
+&lt;!-- Variables defined in the arguments or within the function exist only within the environment of the function. --&gt;
+
+&lt;!-- ```{r makingfunctionsh,error=TRUE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2 --&gt;
+&lt;!--   return(sumNum) --&gt;
+&lt;!-- } --&gt;
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- sumNum --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Variable scope in functions --&gt;
+
+&lt;!-- Variables defined in the global environment outside the function are available within the function. --&gt;
+
+&lt;!-- ```{r makingfunctionsi,error=FALSE} --&gt;
+&lt;!-- my3rdNumber &lt;- 4 --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   sumNum &lt;- num1+num2+my3rdNumber --&gt;
+&lt;!--   return(sumNum) --&gt;
+&lt;!-- } --&gt;
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+&lt;!-- ##  Variable scope in functions --&gt;
+
+&lt;!-- Changes to variables defined in the global environment from within the function will not be reflected in the global environment. --&gt;
+
+&lt;!-- ```{r makingfunctionsj,error=FALSE} --&gt;
+&lt;!-- my3rdNumber &lt;- 4 --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   my3rdNumber &lt;- num1+num2+my3rdNumber --&gt;
+&lt;!--   return(my3rdNumber) --&gt;
+&lt;!-- } --&gt;
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- my3rdNumber --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ##  Variable scope in functions --&gt;
+
+&lt;!-- We can use a **&lt;&lt;-** to assign to the environment outside the function although we will rarely do this --&gt;
+
+&lt;!-- ```{r makingfunctionsk,error=FALSE} --&gt;
+&lt;!-- my3rdNumber &lt;- 4 --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1,num2){ --&gt;
+&lt;!--   my3rdNumber &lt;&lt;- num1+num2+my3rdNumber --&gt;
+&lt;!--   return(my3rdNumber) --&gt;
+&lt;!-- } --&gt;
+&lt;!-- myResult &lt;- myFirstFunction(num1=2,num2=3) --&gt;
+&lt;!-- myResult --&gt;
+&lt;!-- my3rdNumber --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Argument defaults --&gt;
+
+&lt;!-- Functions can have defaults for their arguments which will be used when arguments are not specified. --&gt;
+
+&lt;!-- ```{r makingfunctionsl,error=FALSE} --&gt;
+&lt;!-- myFirstFunction  &lt;- function(num1=1,num2=3){ --&gt;
+&lt;!--   my3rdNumber &lt;- num1+num2+my3rdNumber --&gt;
+&lt;!--   return(my3rdNumber) --&gt;
+&lt;!-- } --&gt;
+&lt;!-- myFirstFunction() --&gt;
+&lt;!-- myFirstFunction(3,4) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Custom function example --&gt;
+&lt;!-- User defined functions can be as long and complicated as you want, taking in many variables, printing out messages and utilizing other functions within them. --&gt;
+
+&lt;!-- Lets make z-scores: --&gt;
+&lt;!-- ```{r makingfunctions_zscores} --&gt;
+&lt;!-- my_zscore  &lt;- function(my_number, my_vector){ --&gt;
+&lt;!--   my_mean &lt;- mean(my_vector) --&gt;
+&lt;!--   message("Mean is ", my_mean) --&gt;
+&lt;!--   diff_from_mean &lt;- my_number-my_mean --&gt;
+&lt;!--   stdev &lt;- sd(my_vector) --&gt;
+&lt;!--   my_z &lt;- diff_from_mean/stdev --&gt;
+&lt;!--   return(my_z) --&gt;
+&lt;!-- } --&gt;
+
+&lt;!-- A &lt;- rnorm(20) --&gt;
+
+&lt;!-- my_zscore(my_number=A[1], my_vector=A) --&gt;
+
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Debugging functions --&gt;
+
+&lt;!-- In Rstudio, if we want to see what may be happening within our function we can use **debug** function with our function of interest's name. We can stop debugging with the **undebug** function. --&gt;
+
+&lt;!-- ```{r makingfunctionsO,error=FALSE,eval=FALSE} --&gt;
+&lt;!-- debug(myFirstFunction) --&gt;
+&lt;!-- undebug(myFirstFunction) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Custom functions and apply --&gt;
+
+&lt;!-- These custom functions can also be utilized with apply.  --&gt;
+
+&lt;!-- ```{r, message=F} --&gt;
+&lt;!-- sapply(A, my_zscore, my_vector=A) --&gt;
+
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+&lt;!-- ```{r, results='asis',include=TRUE,echo=FALSE} --&gt;
+&lt;!-- if(params$isSlides == "yes"){ --&gt;
+&lt;!--   cat("class: inverse, center, middle --&gt;
+
+&lt;!-- # Getting Additional Libraries --&gt;
+
+&lt;!-- &lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=720px&gt;&lt;/html&gt;  --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- "     --&gt;
+&lt;!--   ) --&gt;
+&lt;!-- }else{ --&gt;
+&lt;!--   cat("# Getting Additional Libraries --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- "     --&gt;
+&lt;!--   ) --&gt;
+
+&lt;!-- } --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ## Loading libraries --&gt;
+
+&lt;!-- Libraries can be loaded using the library() function with an argument of the name of the library. --&gt;
+
+&lt;!-- ```{r,eval=F} --&gt;
+&lt;!-- library(ggplot2) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- You can see what libraries are available in the Packages panel or by the library() function with no arguments supplied. --&gt;
+
+&lt;!-- ```{r,eval=F} --&gt;
+&lt;!-- library() --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Installing libraries --&gt;
+
+
+&lt;!-- Libraries can be installed through the R studio menu. --&gt;
+
+&lt;!-- **-&gt; Tools -&gt; Install packages ..** --&gt;
+
+&lt;!-- Or by using the install.packages() command. --&gt;
+
+&lt;!-- ```{r,eval=F} --&gt;
+&lt;!-- install.packages("Hmisc") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ```{r, results='asis',include=TRUE,echo=FALSE} --&gt;
+&lt;!-- if(params$isSlides == "yes"){ --&gt;
+&lt;!--   cat("class: inverse, center, middle --&gt;
+
+&lt;!-- # Scripts --&gt;
+
+&lt;!-- &lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=720px&gt;&lt;/html&gt;  --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- "     --&gt;
+&lt;!--   ) --&gt;
+&lt;!-- }else{ --&gt;
+&lt;!--   cat("# Scripts --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- "     --&gt;
+&lt;!--   ) --&gt;
+
+&lt;!-- } --&gt;
+&lt;!-- ``` --&gt;
+
+
+
+&lt;!-- ## Saving scripts --&gt;
+
+&lt;!-- Once we have got our functions together and know how we want to analyse our data, we can save our analysis as a **script**. By convention R scripts typically end in **.r** or **.R** --&gt;
+
+&lt;!-- To save a file in RStudio. --&gt;
+
+
+&lt;!-- **-&gt; File -&gt; Save as** --&gt;
+
+
+&lt;!-- To open a previous R script --&gt;
+
+&lt;!-- **-&gt;File -&gt; Open File..** --&gt;
+
+&lt;!-- To save all the objects (workspace) with extension **.RData** --&gt;
+
+&lt;!-- **-&gt;Session -&gt; Save workspace as** --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Sourcing scripts --&gt;
+
+
+&lt;!-- R scripts allow us to save and reuse custom functions we have written.  To run the code from an R script we can use the **source()** function with the name of the R script as the argument.  --&gt;
+
+&lt;!-- The file **dayOfWeek.r** in the "scripts" directory contains a simple R script to tell you what day it is. --&gt;
+
+&lt;!-- ``` --&gt;
+&lt;!-- #Contents of dayOfWeek.r --&gt;
+&lt;!-- dayOfWeek &lt;- function(){ --&gt;
+&lt;!--   return(gsub(" .*","",date()))   --&gt;
+&lt;!-- } --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- source("scripts/dayOfWeek.r") --&gt;
+&lt;!-- dayOfWeek() --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Rscript --&gt;
+
+
+&lt;!-- R scripts can be run non-interactively from the command line with the **Rscript** command, usually with the option **--vanilla** to avoid saving or restoring workspaces. All messages/warnings/errors will be output to the console. --&gt;
+
+&lt;!-- ``` --&gt;
+&lt;!-- Rscript --vanilla myscript.r --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- An alternative to Rscript is **R CMD BATCH**. Here all messages/warnings/errors are directed to a file and the processing time appended. --&gt;
+
+&lt;!-- ``` --&gt;
+&lt;!-- R CMD BATCH myscript.r --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Sending arguments to Rscript --&gt;
+
+
+&lt;!-- To provide arguments to an R script at the command line we must add **commandArgs()** function to parse command line arguments. --&gt;
+
+&lt;!-- ```{r,eval=F} --&gt;
+&lt;!-- args &lt;- commandArgs(TRUE) --&gt;
+&lt;!-- myFirstArgument &lt;- args[1] --&gt;
+&lt;!-- myFirstArgument --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ``` --&gt;
+&lt;!-- '10' --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ```{r,eval=F} --&gt;
+&lt;!-- as.numeric(myFirstArgument) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- 10 --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Since vectors can only be one type, all command line arguments are strings and must be converted to numeric if needed with **as.numeric()**. --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Time for an exercise! --&gt;
+
+
+&lt;!-- Exercise on functions can be found [here](../..//exercises/exercises/Functions_exercise.html) --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- ## Answers to exercise --&gt;
+
+
+&lt;!-- Answers can be found here  [here](../..//exercises/answers/Functions_answers.html) --&gt;
 
 ---
-## Installing libraries
+## What we didn't cover
+
+* Matrices
+* Coercing data types
+* Custom functions
+* Making scripts
 
 
-Libraries can be installed through the R studio menu.
-
-**-&gt; Tools -&gt; Install packages ..**
-
-Or by using the install.packages() command.
-
-
-```r
-install.packages("Hmisc")
-```
-
----
-class: inverse, center, middle
-
-# Scripts
-
-&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=720px&gt;&lt;/html&gt; 
-
----
-
-
-
-## Saving scripts
-
-Once we have got our functions together and know how we want to analyse our data, we can save our analysis as a **script**. By convention R scripts typically end in **.r** or **.R**
-
-To save a file in RStudio.
-
-
-**-&gt; File -&gt; Save as**
-
-
-To open a previous R script
-
-**-&gt;File -&gt; Open File..**
-
-To save all the objects (workspace) with extension **.RData**
-
-**-&gt;Session -&gt; Save workspace as**
-
----
-## Sourcing scripts
-
-
-R scripts allow us to save and reuse custom functions we have written.  To run the code from an R script we can use the **source()** function with the name of the R script as the argument. 
-
-The file **dayOfWeek.r** in the "scripts" directory contains a simple R script to tell you what day it is.
-
-```
-#Contents of dayOfWeek.r
-dayOfWeek &lt;- function(){
-  return(gsub(" .*","",date()))  
-}
-```
-
-```r
-source("scripts/dayOfWeek.r")
-dayOfWeek()
-```
-
-```
-## [1] "Tue"
-```
-
----
-## Rscript
-
-
-R scripts can be run non-interactively from the command line with the **Rscript** command, usually with the option **--vanilla** to avoid saving or restoring workspaces. All messages/warnings/errors will be output to the console.
-
-```
-Rscript --vanilla myscript.r
-```
-
-An alternative to Rscript is **R CMD BATCH**. Here all messages/warnings/errors are directed to a file and the processing time appended.
-
-```
-R CMD BATCH myscript.r
-```
-
----
-## Sending arguments to Rscript
-
-
-To provide arguments to an R script at the command line we must add **commandArgs()** function to parse command line arguments.
-
-
-```r
-args &lt;- commandArgs(TRUE)
-myFirstArgument &lt;- args[1]
-myFirstArgument
-```
-
-```
-'10'
-```
-
-```r
-as.numeric(myFirstArgument)
-```
-```
-10
-```
-Since vectors can only be one type, all command line arguments are strings and must be converted to numeric if needed with **as.numeric()**.
-
----
-## Time for an exercise!
-
-
-Exercise on functions can be found [here](../..//exercises/exercises/Functions_exercise.html)
-
----
-## Answers to exercise
-
-
-Answers can be found here  [here](../..//exercises/answers/Functions_answers.html)
 
 ---
 ## Getting help
@@ -1574,6 +1661,9 @@ Answers can be found here  [here](../..//exercises/answers/Functions_answers.htm
 - Local friendly bioinformaticians and computational biologists.
 - [Stackoverflow](http://stackoverflow.com/)
 - [R-help](https://stat.ethz.ch/mailman/listinfo/r-help)
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -1621,6 +1711,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
