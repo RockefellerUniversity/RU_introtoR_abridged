@@ -411,11 +411,6 @@ dfExample
 
 
 
-## ----dataframesReplacement_introtoR-------------------------------------------
-dfExample
-dfExample[dfExample[,"Survival_Time"] > 10,]
-
-
 ## ----dataframesReplacementbyDollar_introtoR-----------------------------------
 dfExample <- data.frame(Name=patientName,Type=patientType,Survival_Time=survivalTime)
 dfExample$Survival_Time
@@ -431,6 +426,12 @@ dfExample
 dim(dfExample)
 nrow(dfExample)
 ncol(dfExample)
+
+
+## -----------------------------------------------------------------------------
+colnames(dfExample)
+colnames(dfExample)[1] <- "PatientID"
+dfExample
 
 
 ## ----matricesCbind_introtoR---------------------------------------------------

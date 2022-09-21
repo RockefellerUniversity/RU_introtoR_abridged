@@ -2124,8 +2124,8 @@ columns will return a vector.</p>
 </div>
 <div id="indexing-5" class="section level2">
 <h2>Indexing</h2>
-<p>When multiple columns or row indices are specified, a matrix is
-returned.</p>
+<p>When multiple columns or row indices are specified, a new data frame
+is returned.</p>
 <p>Values of second and third row (column index is empty!)</p>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>dfExample[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>),]</span></code></pre></div>
 <pre><code>##       Name   Type Survival_Time
@@ -2176,41 +2176,26 @@ factors.</p>
 ## 3 patient3   male             2
 ## 4 patient4 female            20</code></pre>
 </div>
-<div id="indexing-and-replacement-4" class="section level2">
-<h2>Indexing and replacement</h2>
-<p>Data frames may be indexed just <a href="https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#Indexing">as
-matrices</a>.</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>dfExample</span></code></pre></div>
-<pre><code>##       Name   Type Survival_Time
-## 1 patient1  other             1
-## 2 patient2 female            30
-## 3 patient3   male             2
-## 4 patient4 female            20</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>dfExample[dfExample[,<span class="st">&quot;Survival_Time&quot;</span>] <span class="sc">&gt;</span> <span class="dv">10</span>,]</span></code></pre></div>
-<pre><code>##       Name   Type Survival_Time
-## 2 patient2 female            30
-## 4 patient4 female            20</code></pre>
-</div>
 <div id="specify-columns-with" class="section level2">
 <h2>Specify columns with $</h2>
 <p>It is ALSO possible to index a data frames column by using the
 <strong>$</strong> symbol.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>dfExample <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Name=</span>patientName,<span class="at">Type=</span>patientType,<span class="at">Survival_Time=</span>survivalTime)</span>
-<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>dfExample<span class="sc">$</span>Survival_Time</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>dfExample <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Name=</span>patientName,<span class="at">Type=</span>patientType,<span class="at">Survival_Time=</span>survivalTime)</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>dfExample<span class="sc">$</span>Survival_Time</span></code></pre></div>
 <pre><code>## [1]  1 30  2 20</code></pre>
 </div>
 <div id="create-columns-with" class="section level2">
 <h2>Create columns with $</h2>
 <p>The <strong>$</strong> operator also allows for the creation of new
 columns for a data frame on the fly.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>dfExample</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>dfExample</span></code></pre></div>
 <pre><code>##       Name   Type Survival_Time
 ## 1 patient1   male             1
 ## 2 patient2 female            30
 ## 3 patient3   male             2
 ## 4 patient4 female            20</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>dfExample<span class="sc">$</span>newColumn <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;newData&quot;</span>,<span class="fu">nrow</span>(dfExample))</span>
-<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>dfExample</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>dfExample<span class="sc">$</span>newColumn <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;newData&quot;</span>,<span class="fu">nrow</span>(dfExample))</span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>dfExample</span></code></pre></div>
 <pre><code>##       Name   Type Survival_Time newColumn
 ## 1 patient1   male             1   newData
 ## 2 patient2 female            30   newData
@@ -2223,12 +2208,27 @@ columns for a data frame on the fly.</p>
 function will provide dimensions as the row then column number while
 <strong>nrow()</strong> and <strong>ncol()</strong> will return just row
 number and column number respectively.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dfExample)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dfExample)</span></code></pre></div>
 <pre><code>## [1] 4 4</code></pre>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(dfExample)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(dfExample)</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(dfExample)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(dfExample)</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
+</div>
+<div id="names" class="section level2">
+<h2>Names</h2>
+<p>The functions <em>colnames()</em> and <em>rownames()</em> can be used
+to interact with the names. We can access them by simply using the
+function or update them using assignment.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dfExample)</span></code></pre></div>
+<pre><code>## [1] &quot;Name&quot;          &quot;Type&quot;          &quot;Survival_Time&quot; &quot;newColumn&quot;</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(dfExample)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;PatientID&quot;</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>dfExample</span></code></pre></div>
+<pre><code>##   PatientID   Type Survival_Time newColumn
+## 1  patient1   male             1   newData
+## 2  patient2 female            30   newData
+## 3  patient3   male             2   newData
+## 4  patient4 female            20   newData</code></pre>
 </div>
 <div id="joining-vectors-and-data-frames" class="section level2">
 <h2>Joining vectors and data frames</h2>
@@ -2239,11 +2239,11 @@ as columns.</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
 <span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>newDF <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x,dfExample)</span>
 <span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a>newDF</span></code></pre></div>
-<pre><code>##   x     Name   Type Survival_Time newColumn
-## 1 1 patient1   male             1   newData
-## 2 2 patient2 female            30   newData
-## 3 3 patient3   male             2   newData
-## 4 4 patient4 female            20   newData</code></pre>
+<pre><code>##   x PatientID   Type Survival_Time newColumn
+## 1 1  patient1   male             1   newData
+## 2 2  patient2 female            30   newData
+## 3 3  patient3   male             2   newData
+## 4 4  patient4 female            20   newData</code></pre>
 </div>
 <div id="joining-vectors-and-data-frames-1" class="section level2">
 <h2>Joining vectors and data frames</h2>
@@ -2254,12 +2254,12 @@ rows.</p>
 <pre><code>## Warning in rbind(deparse.level, ...): number of columns of result, 5, is not a
 ## multiple of vector length 4 of arg 2</code></pre>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>newerDF</span></code></pre></div>
-<pre><code>##   x     Name   Type Survival_Time newColumn
-## 1 1 patient1   male             1   newData
-## 2 2 patient2 female            30   newData
-## 3 3 patient3   male             2   newData
-## 4 4 patient4 female            20   newData
-## 5 5 patient5   male            25         5</code></pre>
+<pre><code>##   x PatientID   Type Survival_Time newColumn
+## 1 1  patient1   male             1   newData
+## 2 2  patient2 female            30   newData
+## 3 3  patient3   male             2   newData
+## 4 4  patient4 female            20   newData
+## 5 5  patient5   male            25         5</code></pre>
 </div>
 </div>
 <div id="lists" class="section level1">
@@ -2343,7 +2343,7 @@ compatible objects, i.e. list of all one type, the
 </div>
 <div id="time-for-an-exercise" class="section level2">
 <h2>Time for an exercise!</h2>
-<p>Exercise on reading and writing data can be found <a href="../../exercises/exercises/data_types_exercises.html">here</a></p>
+<p>Exercises on what we have covered can be found <a href="../../exercises/exercises/data_types_exercise.html">here</a></p>
 </div>
 <div id="answers-to-exercise" class="section level2">
 <h2>Answers to exercise</h2>
