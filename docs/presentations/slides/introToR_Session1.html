@@ -989,7 +989,7 @@ dfExample[3,]
 ---
 ## Indexing 
 
-When multiple columns or row indices are specified, a matrix is returned.
+When multiple columns or row indices are specified, a new data frame is returned.
 
 Values of second and third row (column index is empty!)
 
@@ -1075,35 +1075,6 @@ dfExample
 ## 4 patient4 female            20
 ```
 
-
----
-## Indexing and replacement
-
-Data frames may be indexed just [as matrices](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#Indexing).
-
-
-```r
-dfExample
-```
-
-```
-##       Name   Type Survival_Time
-## 1 patient1  other             1
-## 2 patient2 female            30
-## 3 patient3   male             2
-## 4 patient4 female            20
-```
-
-```r
-dfExample[dfExample[,"Survival_Time"] &gt; 10,]
-```
-
-```
-##       Name   Type Survival_Time
-## 2 patient2 female            30
-## 4 patient4 female            20
-```
-
 ---
 ## Specify columns with $
 
@@ -1179,10 +1150,37 @@ ncol(dfExample)
 ## [1] 4
 ```
 
+---
+## Names
+
+The functions *colnames()* and *rownames()* can be used to interact with the names. We can access them by simply using the function or update them using assignment.
+
+
+```r
+colnames(dfExample)
+```
+
+```
+## [1] "Name"          "Type"          "Survival_Time" "newColumn"
+```
+
+```r
+colnames(dfExample)[1] &lt;- "PatientID"
+dfExample
+```
+
+```
+##   PatientID   Type Survival_Time newColumn
+## 1  patient1   male             1   newData
+## 2  patient2 female            30   newData
+## 3  patient3   male             2   newData
+## 4  patient4 female            20   newData
+```
+
+
 
 ---
 ## Joining vectors and data frames
-
 
 A data frame can be created from multiple vectors or other data frames.
 
@@ -1195,11 +1193,11 @@ newDF
 ```
 
 ```
-##   x     Name   Type Survival_Time newColumn
-## 1 1 patient1   male             1   newData
-## 2 2 patient2 female            30   newData
-## 3 3 patient3   male             2   newData
-## 4 4 patient4 female            20   newData
+##   x PatientID   Type Survival_Time newColumn
+## 1 1  patient1   male             1   newData
+## 2 2  patient2 female            30   newData
+## 3 3  patient3   male             2   newData
+## 4 4  patient4 female            20   newData
 ```
 
 ---
@@ -1222,12 +1220,12 @@ newerDF
 ```
 
 ```
-##   x     Name   Type Survival_Time newColumn
-## 1 1 patient1   male             1   newData
-## 2 2 patient2 female            30   newData
-## 3 3 patient3   male             2   newData
-## 4 4 patient4 female            20   newData
-## 5 5 patient5   male            25         5
+##   x PatientID   Type Survival_Time newColumn
+## 1 1  patient1   male             1   newData
+## 2 2  patient2 female            30   newData
+## 3 3  patient3   male             2   newData
+## 4 4  patient4 female            20   newData
+## 5 5  patient5   male            25         5
 ```
 
 
@@ -1362,7 +1360,7 @@ flatList[1:7]
 ---
 ## Time for an exercise!
 
-Exercise on reading and writing data can be found [here](../../exercises/exercises/data_types_exercises.html)
+Exercises on what we have covered can be found [here](../../exercises/exercises/data_types_exercise.html)
 
 ---
 ## Answers to exercise
