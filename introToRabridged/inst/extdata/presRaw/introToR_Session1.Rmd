@@ -755,7 +755,7 @@ dfExample[3,]
 ---
 ## Indexing 
 
-When multiple columns or row indices are specified, a matrix is returned.
+When multiple columns or row indices are specified, a new data frame is returned.
 
 Values of second and third row (column index is empty!)
 ```{r matricesIndexingExampleByMultipleRow_introtoR}
@@ -800,17 +800,6 @@ dfExample
 
 ```
 
-
----
-## Indexing and replacement
-
-Data frames may be indexed just [as matrices](https://rockefelleruniversity.github.io/Intro_To_R_1Day/presentations/singlepage/introToR_Session1.html#Indexing).
-
-```{r dataframesReplacement_introtoR}
-dfExample
-dfExample[dfExample[,"Survival_Time"] > 10,]
-```
-
 ---
 ## Specify columns with $
 
@@ -842,10 +831,21 @@ nrow(dfExample)
 ncol(dfExample)
 ```
 
+---
+## Names
+
+The functions *colnames()* and *rownames()* can be used to interact with the names. We can access them by simply using the function or update them using assignment.
+
+```{r}
+colnames(dfExample)
+colnames(dfExample)[1] <- "PatientID"
+dfExample
+```
+
+
 
 ---
 ## Joining vectors and data frames
-
 
 A data frame can be created from multiple vectors or other data frames.
 
@@ -954,7 +954,7 @@ flatList[1:7]
 ---
 ## Time for an exercise!
 
-Exercise on reading and writing data can be found [here](../../exercises/exercises/data_types_exercises.html)
+Exercises on what we have covered can be found [here](../../exercises/exercises/data_types_exercise.html)
 
 ---
 ## Answers to exercise
