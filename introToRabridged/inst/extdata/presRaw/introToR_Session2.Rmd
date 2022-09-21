@@ -323,9 +323,9 @@ head(my_df_ordered)
 ---
 ## Subsetting
 
-Anotehr opertaion we oftenwant to do is subset our dataset based on a specific condition i.e. I want to only look at Glycolysis genes, or I only want to gene above a certain expression threshold. To do this we need to use a logical operator test to see if this if something is TRUE.
+Another operation we often want to do is subset our dataset based on a specific condition i.e. I want to only look at Glycolysis genes, or I only want to gene above a certain expression threshold. To do this we need to use a logical operator test to see if this if something is TRUE.
 
-Here we see which genes have an expression greater than 60.
+Here we see which genes have an expression greater than 70.
 ```{r}
 my_df_ordered$Expression > 70
 
@@ -749,7 +749,7 @@ plot(merge_df[,c(4,5)])
 ---
 ## Base plotting
 
-Many plots types like factors. This helps the plotting deal with dividing your data into categories.
+Many plots types like factors. This helps the plotting deal with dividing your data into categories. Here we try with a regular vector.
 
 ```{r, eval=F}
 plot(merge_df[,3])
@@ -757,11 +757,14 @@ plot(merge_df[,3])
 
 ```{r, echo=F}
 try(plot(merge_df[,3]))
-print(1)
 ```
 
+---
+## Base plotting
 
-```{r}
+Now we try with a factor.
+
+```{r, fig.width=8,fig.height=4.5,dpi=300,out.width="900px",height="900px"}
 merge_df[,3] <- factor(merge_df[,3])
 plot(merge_df[,3])
 ```
